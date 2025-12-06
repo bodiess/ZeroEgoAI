@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
  *  - soften
  *  - clarify
  *  - assertive
- *  - all  (tek istekte 3 paket)
+ *  - all  (tek istekte 3 öneri)
  */
 
 // TR’de gerilim yaratan kelime/kalıplar
@@ -67,7 +67,7 @@ function soften(text) {
   t = t.replace(/!{2,}/g, "!");
   t = t.replace(/\b(ACİL|DERHAL)\b/g, "Mümkünse");
 
-  // Nazik giriş tamponu
+  // Nazik giriş
   if (!hasGreeting(t)) {
     t = "Lütfen bir göz atabilir misin? " + t;
   }
@@ -99,10 +99,15 @@ function assertive(text) {
 
 export async function POST(request) {
   try {
-    const { text, mode } = await request.json();
+    const body = await request.json();
+    const text = body?.text;
+    const mode = body?.mode;
 
-    if (!text || !text.trim()) {
-      return NextResponse.json({ error: "Metin alanı boş olamaz." }, { status: 400 });
+    if (!text || !String(text).trim()) {
+      return NextResponse.json(
+        { error: "Metin alanı boş olamaz." },
+        { status: 400 }
+      );
     }
 
     const m = (mode || "soften").toLowerCase();
@@ -139,10 +144,17 @@ export async function POST(request) {
     });
   } catch (error) {
     console.error("Rewrite API Hatası:", error);
-    return NextResponse.json({ error: "Beklenmeyen bir hata oluştu." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Beklenmeyen bir hata oluştu." },
+      { status: 500 }
+    );
   }
 }
 
+// Tek GET tanımı
 export async function GET() {
-  return NextResponse.json({ error: "GET metoduna izin verilmiyor." }, { status: 405 });
+  return NextResponse.json(
+    { ok: true, message: "Rewrite API çalışıyor. POST kullan." },
+    { status: 200 }
+  );
 }
