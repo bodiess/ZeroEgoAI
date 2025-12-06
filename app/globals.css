@@ -1,4 +1,132 @@
-/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ---------------------------
+   Ultra Elite Soft Theme
+   --------------------------- */
+:root {
+  /* Arka plan - pearl */
+  --zenith-bg: 248 250 252;         /* #f8fafc */
+  --zenith-surface: 255 255 255;    /* white */
+
+  /* Yazı - koyu lacivert/ink */
+  --zenith-ink: 10 16 28;           /* near navy */
+  --zenith-muted: 100 116 139;      /* slate-500 */
+
+  /* Marka ana renk - deep midnight */
+  --zenith-primary: 11 18 32;       /* #0b1220 */
+
+  /* Altın ama soft - "champagne gold" */
+  --zenith-accent: 242 217 141;     /* #F2D98D */
+  --zenith-accent-soft: 252 243 214;/* very soft gold */
+
+  /* Border */
+  --zenith-border: 226 232 240;     /* slate-200 */
+}
+
+/* Base typography */
+html, body {
+  height: 100%;
+}
+
+body {
+  @apply bg-zenith-bg text-zenith-ink font-sans antialiased;
+}
+
+/* ---------------------------
+   Premium background helpers
+   --------------------------- */
+.zenith-mesh {
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(11,18,32,0.06), transparent 40%),
+    radial-gradient(circle at 85% 25%, rgba(242,217,141,0.14), transparent 45%),
+    radial-gradient(circle at 25% 85%, rgba(11,18,32,0.05), transparent 40%),
+    radial-gradient(circle at 70% 90%, rgba(242,217,141,0.12), transparent 45%);
+  filter: blur(18px);
+}
+
+.zenith-glow-ring {
+  background:
+    radial-gradient(circle at center,
+      rgba(242,217,141,0.22),
+      rgba(242,217,141,0.0) 60%);
+  filter: blur(22px);
+}
+
+/* ---------------------------
+   Component system
+   --------------------------- */
+@layer components {
+  /* Ana premium kart */
+  .zenith-card {
+    @apply bg-zenith-surface/95 backdrop-blur
+           border border-zenith-border
+           rounded-zenith
+           shadow-zenith;
+  }
+
+  /* Kart hover "elit lift" */
+  .zenith-card-raise {
+    @apply transition duration-200 ease-out;
+  }
+  .zenith-card-raise:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 60px rgba(2, 6, 23, 0.14);
+  }
+
+  /* Stat kartı */
+  .zenith-stat {
+    @apply zenith-card p-5;
+  }
+  .zenith-stat-label {
+    @apply text-[10px] font-extrabold tracking-[0.12em] uppercase text-zenith-muted;
+  }
+  .zenith-stat-value {
+    @apply mt-1 text-2xl font-black text-zenith-ink;
+  }
+  .zenith-stat-sub {
+    @apply mt-1 text-xs text-zenith-muted;
+  }
+
+  /* Butonlar */
+  .zenith-btn {
+    @apply px-4 py-2.5 rounded-xl font-extrabold
+           shadow-sm transition duration-150;
+  }
+  .zenith-btn-gold {
+    @apply zenith-btn bg-zenith-accent text-black;
+  }
+  .zenith-btn-gold:hover {
+    filter: brightness(0.98);
+  }
+  .zenith-btn-primary {
+    @apply zenith-btn bg-zenith-primary text-white;
+  }
+
+  /* Input */
+  .zenith-textarea {
+    @apply w-full p-4 rounded-xl border border-zenith-border
+           bg-white focus:outline-none
+           focus:ring-2 focus:ring-black/5
+           transition;
+  }
+
+  /* Shimmer blok */
+  .zenith-shimmer {
+    background: linear-gradient(90deg,
+      rgba(2,6,23,0.04) 0%,
+      rgba(2,6,23,0.08) 35%,
+      rgba(2,6,23,0.04) 70%);
+    background-size: 200% 100%;
+  }
+
+  /* Chip */
+  .zenith-chip {
+    @apply inline-flex items-center gap-1
+           px-3 py-1 rounded-full
+           text-[10px] font-bold
+           bg-black/[0.04] border border-black/[0.05]
+           text-zenith-muted;
+  }
+}

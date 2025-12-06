@@ -224,7 +224,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* ================= LEFT: Input + Core Flow ================= */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white/95 backdrop-blur rounded-2xl shadow-2xl p-7 border border-white/40 zenith-fade-up">
+            <div className="zenith-card zenith-card-raise p-7 animate-card-in">
               <header className="text-left">
                 <h1 className="text-3xl font-extrabold text-zenith-primary tracking-tight">
                   Zenith Decision
@@ -360,11 +360,12 @@ export default function HomePage() {
           <div className="lg:col-span-7 space-y-6">
             {/* Stats row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="zenith-stat-card">
+              <div className="zenith-stat animate-card-in">
                 <div className="zenith-stat-label">Durum</div>
-                <div className="zenith-stat-value">
-                  {analysisResult ? "Analiz Hazır" : isLoading ? "İşleniyor" : "Beklemede"}
-                </div>
+                 <div className="zenith-stat-value">Analiz Hazır</div>
+               <div className="zenith-shimmer animate-shimmer h-28 rounded-xl" />
+             </div>
+
                 <div className="zenith-stat-sub">
                   {analysisResult ? "Dashboard aktif" : "Metin gir, başlat"}
                 </div>
