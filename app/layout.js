@@ -1,9 +1,8 @@
-// app/layout.js
 import "./globals.css";
 
 export const metadata = {
   title: "Zero Ego AI",
-  description: "Zenith Decision - Ego-Sıfır analiz",
+  description: "Zenith Decision",
 };
 
 export default function RootLayout({ children }) {
