@@ -6,24 +6,24 @@ const PRIMARY_COLOR = 'bg-zenith-primary';
 const ACCENT_COLOR = 'bg-zenith-accent';
 
 export default function HomePage() {
-  // -----------------------------
+  // =========================
   // ANALYZE STATES
-  // -----------------------------
+  // =========================
   const [decisionText, setDecisionText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [error, setError] = useState(null);
 
-  // -----------------------------
+  // =========================
   // REWRITE STATES
-  // -----------------------------
+  // =========================
   const [rewriteText, setRewriteText] = useState('');
   const [rewriteLoading, setRewriteLoading] = useState(false);
   const [rewriteError, setRewriteError] = useState(null);
 
-  // -----------------------------
+  // =========================
   // ANALYZE SUBMIT
-  // -----------------------------
+  // =========================
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!decisionText.trim()) return;
@@ -47,16 +47,16 @@ export default function HomePage() {
         setError(data.error || 'Analiz sırasında beklenmedik bir hata oluştu.');
       }
     } catch (err) {
-      console.error('API Bağlantı Hatası:', err);
+      console.error("API Bağlantı Hatası:", err);
       setError('Sunucuya bağlanılamadı. Lütfen daha sonra tekrar deneyin.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // -----------------------------
+  // =========================
   // REWRITE HANDLER
-  // -----------------------------
+  // =========================
   const handleRewrite = async (mode) => {
     if (!decisionText.trim()) return;
 
@@ -85,16 +85,16 @@ export default function HomePage() {
     }
   };
 
-  // -----------------------------
-  // Bileşik skor yorumlama
-  // -----------------------------
+  // =========================
+  // Compound yorumlama
+  // =========================
   const interpretCompoundScore = (score) => {
-    if (score >= 0.05) return { text: 'Yüksek Pozitif Ton', color: 'text-green-600' };
-    if (score <= -0.05) return { text: 'Yüksek Negatif/Korku Tonu', color: 'text-red-600' };
-    return { text: 'Nispeten Nötr Ton', color: 'text-gray-600' };
+    if (score >= 0.05) return { text: "Yüksek Pozitif Ton", color: "text-green-600" };
+    if (score <= -0.05) return { text: "Yüksek Negatif/Korku Tonu", color: "text-red-600" };
+    return { text: "Nispeten Nötr Ton", color: "text-gray-600" };
   };
 
-  const compound = analysisResult?.['bileşik_skor'];
+  const compound = analysisResult?.bileşik_skor;
 
   return (
     <div className={`min-h-screen ${PRIMARY_COLOR} flex items-center justify-center p-4`}>
@@ -127,38 +127,38 @@ export default function HomePage() {
                 disabled={isLoading}
               />
 
-              {/* REWRITE BUTONLARI */}
+              {/* Rewrite butonları */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3">
                 <button
                   type="button"
-                  onClick={() => handleRewrite('soften')}
+                  onClick={() => handleRewrite("soften")}
                   className="py-2 rounded-lg bg-zenith-accent font-bold text-black hover:opacity-90 disabled:opacity-60"
                   disabled={rewriteLoading || isLoading}
                 >
-                  {rewriteLoading ? '...' : 'Yumuşat'}
+                  {rewriteLoading ? "..." : "Yumuşat"}
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => handleRewrite('clarify')}
+                  onClick={() => handleRewrite("clarify")}
                   className="py-2 rounded-lg bg-gray-200 font-bold text-gray-800 hover:opacity-90 disabled:opacity-60"
                   disabled={rewriteLoading || isLoading}
                 >
-                  {rewriteLoading ? '...' : 'Netleştir'}
+                  {rewriteLoading ? "..." : "Netleştir"}
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => handleRewrite('assertive')}
+                  onClick={() => handleRewrite("assertive")}
                   className="py-2 rounded-lg bg-zenith-primary font-bold text-white hover:opacity-90 disabled:opacity-60"
                   disabled={rewriteLoading || isLoading}
                 >
-                  {rewriteLoading ? '...' : 'Güçlü & Saygılı'}
+                  {rewriteLoading ? "..." : "Güçlü & Saygılı"}
                 </button>
               </div>
             </div>
 
-            {/* ANALYZE BUTTON */}
+            {/* Analyze butonu */}
             <button
               type="submit"
               className={`w-full py-3 text-lg font-bold text-black rounded-lg transition duration-300 ease-in-out hover:shadow-lg ${ACCENT_COLOR} ${isLoading ? 'opacity-60 cursor-not-allowed' : 'hover:opacity-90'}`}
@@ -169,7 +169,7 @@ export default function HomePage() {
           </form>
         </section>
 
-        {/* REWRITE HATA */}
+        {/* Rewrite hata */}
         {rewriteError && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
             <strong className="font-bold">Rewrite Hata!</strong>
@@ -177,7 +177,7 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* REWRITE SONUÇ */}
+        {/* Rewrite sonuç */}
         {rewriteText && (
           <section className="p-4 bg-white rounded-lg border">
             <h3 className="font-bold text-gray-800 mb-2">✨ Önerilen Metin</h3>
@@ -206,15 +206,15 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* ANALYZE HATA */}
+        {/* Analyze hata */}
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
             <strong className="font-bold">Hata!</strong>
             <span className="block sm:inline ml-2">{error}</span>
           </div>
         )}
 
-        {/* ANALYZE SONUÇ */}
+        {/* Analyze sonuç */}
         {analysisResult && (
           <section className="mt-2 p-6 bg-gray-50 rounded-lg shadow-inner border-l-4 border-zenith-primary">
             <h2 className="text-xl font-bold text-zenith-primary mb-4 flex items-center">
@@ -231,13 +231,13 @@ export default function HomePage() {
 
               <div className="flex justify-between text-xs pt-2">
                 <p className="text-green-600 font-medium">
-                  Pozitif Ton: {(analysisResult['pozitif_skor'] * 100).toFixed(1)}%
+                  Pozitif Ton: {(analysisResult.pozitif_skor * 100).toFixed(1)}%
                 </p>
                 <p className="text-gray-600 font-medium">
-                  Nötr Ton: {(analysisResult['nötr_skor'] * 100).toFixed(1)}%
+                  Nötr Ton: {(analysisResult.nötr_skor * 100).toFixed(1)}%
                 </p>
                 <p className="text-red-600 font-medium">
-                  Negatif Ton: {(analysisResult['negatif_skor'] * 100).toFixed(1)}%
+                  Negatif Ton: {(analysisResult.negatif_skor * 100).toFixed(1)}%
                 </p>
               </div>
 
@@ -245,13 +245,13 @@ export default function HomePage() {
                 <h3 className="font-bold text-gray-800 mb-2">Zenith Eylem Tavsiyesi:</h3>
 
                 <p className="text-sm text-gray-600 italic">
-                  Kararınız, mantıksal verilerden çok anlık duygusal ağırlık içeriyor. Panik (Negatif) veya FOMO (Pozitif)
-                  anında işlem yapmak, uzun vadede riskinizi artırabilir.
+                  Kararınız, mantıksal verilerden çok anlık duygusal ağırlık içeriyor.
+                  Panik (Negatif) veya FOMO (Pozitif) anında işlem yapmak, uzun vadede riskinizi artırabilir.
                 </p>
 
-                {/* Revshare alanı (senin metnini bozmadan sadece href düzeltildi) */}
+                {/* Revshare alanı */}
                 <p className="mt-3 text-sm">
-                  Önyargılarınızı kenara bırakın ve güvenli bir platformda yeni bir başlangıç yapın:
+                  Önyargılarınızı kenara bırakın ve dünyanın en güvenli platformlarından birinde yeni bir başlangıç yapın:
                   <br />
                   <a
                     href="https://www.binance.com/activity/referral-entry/CPA?ref=CPA_003RRA9B6U"
