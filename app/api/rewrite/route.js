@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
 
 /**
- * Sıfır Ego Rewrite API (Premium MVP)
+ * Rewrite API
  * mode:
  *  - soften
  *  - clarify
  *  - assertive
- *  - all  (tek istekte 3 öneri)
+ *  - all
  */
 
-// TR’de gerilim yaratan kelime/kalıplar
+// TR’de sertleşen kalıplar
 const harshMap = [
   ["saçma", "çok uygun görünmüyor"],
   ["aptalca", "pek sağlıklı görünmüyor"],
@@ -21,12 +21,9 @@ const harshMap = [
   ["yanlış", "eksik kalmış olabilir"],
   ["anlamadın", "sanırım tam netleşmedi"],
   ["yapmak zorundasın", "yapmanı rica ediyorum"],
-  ["bunu bilmiyor musun", "bunu birlikte netleştirebilir miyiz"],
-  ["ne diyorsun", "ne demek istediğini tam anlamak istiyorum"],
   ["boş yapma", "konuyu biraz daha netleştirelim"],
 ];
 
-// Clarify için dolgu kelimeleri
 const fillerWords = [
   "yani",
   "işte",
@@ -62,12 +59,9 @@ function soften(text) {
   });
 
   t = normalizeSpaces(t);
-
-  // Ünlem agresyonunu azalt
   t = t.replace(/!{2,}/g, "!");
   t = t.replace(/\b(ACİL|DERHAL)\b/g, "Mümkünse");
 
-  // Nazik giriş
   if (!hasGreeting(t)) {
     t = "Lütfen bir göz atabilir misin? " + t;
   }
@@ -142,8 +136,8 @@ export async function POST(request) {
       original: text,
       rewritten,
     });
-  } catch (error) {
-    console.error("Rewrite API Hatası:", error);
+  } catch (err) {
+    console.error("Rewrite API error:", err);
     return NextResponse.json(
       { error: "Beklenmeyen bir hata oluştu." },
       { status: 500 }
@@ -151,7 +145,7 @@ export async function POST(request) {
   }
 }
 
-// Tek GET tanımı
+// TEK GET (çakışma yok)
 export async function GET() {
   return NextResponse.json(
     { ok: true, message: "Rewrite API çalışıyor. POST kullan." },
