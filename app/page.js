@@ -557,10 +557,6 @@ export default function HomePage() {
           </div>
 
           {/* Top bar */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.06] text-xs font-semibold text-zenith-muted">
-              ⚡ Zero Ego • Ultra Premium
-            </div>
             <div className="flex flex-wrap gap-2">
               <span className="zenith-chip">Ton Radar</span>
               <span className="zenith-chip">Önyargı Uyarıları</span>
