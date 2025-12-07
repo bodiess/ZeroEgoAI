@@ -672,7 +672,7 @@ export default function HomePage() {
                       value={rewriteText}
                     />
                   </section>
-                )}
+                
               </div>
 
               {/* Surprise Insight */}
@@ -763,10 +763,18 @@ export default function HomePage() {
 
                 {/* Results grid */}
                 {analysisResult && (
-  <PerceptionSurvey analysis={analysisResult} originalText={decisionText} />
+  <>
+    <PerceptionSurvey
+      analysis={analysisResult}
+      originalText={decisionText}
+    />
+
+    <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* kartların burada */}
+    </div>
+  </>
 )}
 
-				  <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Compound score card */}
                     <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
                       <div className="text-xs font-semibold text-zenith-muted">
