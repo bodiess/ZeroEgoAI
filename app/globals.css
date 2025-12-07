@@ -1,300 +1,326 @@
 /* =========================================================
- * Zenith / ZeroEgoAI - Corporate Premium Patch v2 (AI Enhanced)
- * Maksimum Yapay Zeka konsepti entegre edildi.
- * ========================================================= */
+   ZENITH DECISION - CORPORATE CLEAN UI PACK v1
+   - Daha büyük yazılar
+   - Tek tip button hiyerarşisi
+   - Net amaç anlatan sade enterprise görünüm
+   - Tailwind ile uyumlu custom class layer
+   ========================================================= */
 
-/* 1) Daha kurumsal renk dengesi (AI Neon Güçlendirmesi) */
+/* -----------------------------
+   1) Design Tokens
+-------------------------------- */
 :root{
-  --zenith-bg: #060b17;
-  --zenith-bg-2: #0a1224;
+  /* Backgrounds */
+  --zenith-bg: #070c1a;
+  --zenith-bg-2:#0b142b;
 
+  /* Surfaces */
   --zenith-surface: rgba(255,255,255,0.045);
-  --zenith-surface-strong: rgba(255,255,255,0.07);
-  --zenith-border: rgba(255,255,255,0.09);
+  --zenith-surface-strong: rgba(255,255,255,0.08);
 
-  --zenith-ink: #f7f9ff;
-  --zenith-muted: rgba(226,232,255,0.70);
+  /* Borders */
+  --zenith-border: rgba(255,255,255,0.08);
 
-  /* corporate accents (daha kontrollü) */
-  --zenith-primary: #8fa2ff;    /* kurumsal indigo */
-  --zenith-turq: #5cc8ff;      /* enterprise cyan (Ana AI vurgu rengi) */
-  --zenith-accent: #7d6bff;     /* İkincil AI vurgu rengi */
+  /* Text */
+  --zenith-ink: #f6f8ff;
+  --zenith-muted: rgba(227,234,255,0.72);
 
-  --zenith-gold: #f5d27b;
+  /* Accents (kurumsal) */
+  --zenith-primary: #8ea2ff;  /* Indigo */
+  --zenith-turq:    #5cc8ff;  /* Cyan */
+  --zenith-accent:  #7c6bff;  /* Violet */
+
+  /* Gold (CTA / premium) */
+  --zenith-gold:   #f6d98e;
   --zenith-gold-2: #eeb458;
 
-  /* AI Glow Ayarları (Mevcut gölgeler üzerine ek güç) */
-  --ai-glow-soft: 0 0 10px rgba(92, 200, 255, 0.35); /* Hafif turkuaz glow */
-  --ai-glow-strong: 0 0 15px var(--zenith-turq), 0 0 30px rgba(92, 200, 255, 0.4);
+  /* Shadows */
+  --zenith-shadow-soft: 0 10px 30px rgba(0,0,0,0.35);
+  --zenith-shadow-raise:0 18px 70px rgba(0,0,0,0.52);
 
-  --zenith-shadow-soft: 0 8px 28px rgba(0,0,0,0.38); /* Orijinal korundu */
-  --zenith-shadow-raise: 0 18px 70px rgba(0,0,0,0.52); /* Orijinal korundu */
+  /* Radius */
+  --zenith-radius-lg: 18px;
+  --zenith-radius-md: 12px;
+
+  /* Focus */
+  --zenith-focus: 0 0 0 4px rgba(92,200,255,0.22);
 }
 
-/* 2) Sayfa zemini: daha “boardroom SaaS” */
+/* -----------------------------
+   2) Background helpers
+-------------------------------- */
 .bg-zenith-bg{
   background:
-    radial-gradient(900px 600px at 15% 10%, rgba(92,200,255,0.12), transparent 60%), /* Turkuaz ışık güçlendirildi */
-    radial-gradient(900px 650px at 90% 15%, rgba(125,107,255,0.12), transparent 60%), /* Mor ışık güçlendirildi */
+    radial-gradient(800px 520px at 12% 10%, rgba(92,200,255,0.10), transparent 60%),
+    radial-gradient(900px 600px at 90% 16%, rgba(124,107,255,0.10), transparent 60%),
     linear-gradient(135deg, var(--zenith-bg), var(--zenith-bg-2));
 }
 
-/* 3) Mesh daha ince (AI ızgara deseni) */
+/* Mesh overlay */
 .zenith-mesh{
   background-image:
-    linear-gradient(to right, rgba(92,200,255,0.05) 1px, transparent 1px), /* Turkuaz ızgara rengi */
-    linear-gradient(to bottom, rgba(125,107,255,0.05) 1px, transparent 1px); /* Mor ızgara rengi */
+    linear-gradient(to right, rgba(92,200,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124,107,255,0.05) 1px, transparent 1px);
   background-size: 56px 56px, 56px 56px;
 }
 
-/* 4) Orblar daha sofistike */
+/* Orbs */
 .zenith-orb{
-  filter: blur(65px); /* Biraz daha fazla bulanıklık */
-  opacity: 0.55; /* Biraz daha fazla görünürlük */
-  transition: opacity 0.5s ease; /* AI canlılığı için geçiş eklendi */
+  filter: blur(70px);
+  opacity: .55;
 }
 .zenith-orb-a{
   background:
-    radial-gradient(circle at 30% 35%, rgba(92,200,255,0.45), transparent 65%), /* Güçlendirildi */
-    radial-gradient(circle at 70% 70%, rgba(125,107,255,0.38), transparent 65%); /* Güçlendirildi */
+    radial-gradient(circle at 30% 35%, rgba(92,200,255,0.40), transparent 65%),
+    radial-gradient(circle at 70% 70%, rgba(124,107,255,0.34), transparent 65%);
 }
 .zenith-orb-b{
   background:
-    radial-gradient(circle at 35% 35%, rgba(143,162,255,0.38), transparent 65%),
-    radial-gradient(circle at 70% 70%, rgba(92,200,255,0.30), transparent 65%);
+    radial-gradient(circle at 35% 35%, rgba(142,162,255,0.32), transparent 65%),
+    radial-gradient(circle at 70% 70%, rgba(92,200,255,0.26), transparent 65%);
 }
 
-/* 5) Kartlar: premium enterprise (AI Panelleri) */
+/* -----------------------------
+   3) Typography utilities
+-------------------------------- */
+.text-zenith-ink{ color: var(--zenith-ink); }
+.text-zenith-muted{ color: var(--zenith-muted); }
+.text-zenith-primary{ color: var(--zenith-turq); }
+
+/* Genel okunabilirlik için */
+body{
+  color: var(--zenith-ink);
+}
+
+/* -----------------------------
+   4) Cards
+-------------------------------- */
 .zenith-card{
   background:
     linear-gradient(135deg,
-      rgba(255,255,255,0.075), /* Biraz daha parlak başlangıç */
+      rgba(255,255,255,0.075),
       rgba(255,255,255,0.03)
     );
-  border: 1px solid var(--zenith-turq); /* Border rengi AI vurgusuna ayarlandı */
-  border-radius: 18px;
-  box-shadow: var(--zenith-shadow-soft), var(--ai-glow-soft); /* AI glow eklendi */
-  backdrop-filter: blur(18px) saturate(130%); /* Daha keskin bulanıklık */
-  transition: all 0.3s ease; /* Hover için geçiş */
+  border: 1px solid var(--zenith-border);
+  border-radius: var(--zenith-radius-lg);
+  box-shadow: var(--zenith-shadow-soft);
+  backdrop-filter: blur(16px) saturate(120%);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
 .zenith-card:hover{
-  box-shadow: var(--zenith-shadow-raise), var(--ai-glow-strong);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+  border-color: rgba(92,200,255,0.22);
+  box-shadow: var(--zenith-shadow-raise);
 }
 
 .zenith-card-raise{
-  box-shadow: var(--zenith-shadow-raise), 0 0 30px rgba(92, 200, 255, 0.5); /* Ekstra güçlü AI glow */
+  border-color: rgba(92,200,255,0.22);
+  box-shadow: var(--zenith-shadow-raise);
 }
 
-/* 6) Chipler: “toolbar tab” hissi (AI Etiketleri) */
+/* -----------------------------
+   5) Chips
+-------------------------------- */
 .zenith-chip{
-  padding: 6px 12px;
-  font-size: 11px; /* Font boyutu biraz artırıldı */
-  font-weight: 700;
-  letter-spacing: .05em; /* Harf aralığı artırıldı */
-  text-transform: uppercase; /* Fütüristik görünüm */
+  padding: 6px 11px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
   color: var(--zenith-ink);
-  border: 1px solid rgba(92,200,255,0.3); /* Turkuaz border */
+  border-radius: 999px;
+  border: 1px solid rgba(92,200,255,0.25);
   background:
     linear-gradient(135deg,
-      rgba(92,200,255,0.15), /* Daha belirgin AI rengi */
-      rgba(125,107,255,0.15)
+      rgba(92,200,255,0.14),
+      rgba(124,107,255,0.12)
     );
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 0 5px rgba(92,200,255,0.3); /* Hafif glow */
 }
 
-/* 7) Stat kartları daha clean (AI Veri Panelcikleri) */
+/* -----------------------------
+   6) Stats mini cards
+-------------------------------- */
 .zenith-stat{
   background:
     linear-gradient(135deg,
       rgba(255,255,255,0.07),
       rgba(255,255,255,0.03)
     );
-  border: 1px solid var(--zenith-accent); /* Mor/Accent border */
-  border-radius: 16px;
-  padding: 18px;
-  box-shadow: 0 0 8px rgba(125,107,255,0.3); /* Mor glow eklendi */
+  border: 1px solid rgba(124,107,255,0.22);
+  border-radius: var(--zenith-radius-md);
+  padding: 18px 18px 16px 18px;
+  box-shadow: 0 0 10px rgba(124,107,255,0.18);
 }
 
-/* 8) Buton sistemi: tek ölçü, premium (AI Etkileşim Elemanları) */
-.zenith-btn{
-  min-height: 44px; /* Yükseklik biraz artırıldı */
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 800;
+.zenith-stat-label{
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--zenith-muted);
+  letter-spacing: .04em;
   text-transform: uppercase;
-  color: var(--zenith-ink);
-  border: 1px solid rgba(92,200,255,0.4); /* AI border */
-  background:
-    linear-gradient(135deg,
-      rgba(255,255,255,0.08),
-      rgba(255,255,255,0.04)
-    );
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35), 0 0 8px rgba(92,200,255,0.25); /* Glow eklendi */
-  transition: transform .15s ease, filter .15s ease, opacity .15s ease, box-shadow .15s ease;
-}
-.zenith-btn:hover{
-  transform: translateY(-2px);
-  filter: brightness(1.15);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4), var(--ai-glow-soft); /* Hover'da daha belirgin glow */
 }
 
-/* Variantler */
+.zenith-stat-value{
+  margin-top: 4px;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--zenith-ink);
+}
+
+.zenith-stat-sub{
+  margin-top: 2px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--zenith-muted);
+}
+
+/* -----------------------------
+   7) Unified Button System
+   - Problem: "buton karmaşası"
+   - Çözüm: tek base + 3 net seviye
+-------------------------------- */
+.zenith-btn{
+  min-height: 46px;
+  padding: 11px 16px;
+  border-radius: var(--zenith-radius-md);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  color: var(--zenith-ink);
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  transition: transform .14s ease, filter .14s ease, border-color .14s ease, box-shadow .14s ease, opacity .14s ease;
+}
+
+.zenith-btn:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+  border-color: rgba(92,200,255,0.22);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+}
+
+.zenith-btn:disabled{
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Primary = ana aksiyon (Analiz) */
 .zenith-btn-primary{
-  color: var(--zenith-bg); /* Koyu arka plan rengi */
+  min-height: 50px;
+  font-size: 13.5px;
+  font-weight: 900;
+  color: #050914;
   border: 0;
   background: linear-gradient(90deg, var(--zenith-turq), var(--zenith-accent));
-  box-shadow: 0 10px 28px rgba(92,200,255,0.45); /* Glow güçlendirildi */
-}
-
-.zenith-btn-turq{
-  color: var(--zenith-bg);
-  border: 0;
-  background: linear-gradient(90deg, var(--zenith-turq), #8ad7ff);
   box-shadow: 0 10px 28px rgba(92,200,255,0.35);
 }
 
+/* Gold = premium/özel CTA */
 .zenith-btn-gold{
+  min-height: 48px;
+  font-size: 12.8px;
+  font-weight: 900;
   color: #1b1200;
   border: 0;
   background: linear-gradient(90deg, var(--zenith-gold), var(--zenith-gold-2));
-  box-shadow: 0 10px 28px rgba(245,210,123,0.35); /* Glow güçlendirildi */
+  box-shadow: 0 10px 26px rgba(245,210,123,0.28);
 }
 
-/* 9) Textarea: enterprise input (AI Komut Konsolu) */
+/* Turq = secondary highlight */
+.zenith-btn-turq{
+  min-height: 48px;
+  font-size: 12.8px;
+  font-weight: 900;
+  color: #04101c;
+  border: 0;
+  background: linear-gradient(90deg, var(--zenith-turq), #8ad7ff);
+  box-shadow: 0 10px 26px rgba(92,200,255,0.25);
+}
+
+/* -----------------------------
+   8) Textarea / Inputs
+-------------------------------- */
 .zenith-textarea{
   width: 100%;
   border-radius: 14px;
-  border: 1px solid var(--zenith-turq); /* AI renginde border */
+  border: 1px solid rgba(92,200,255,0.20);
   background:
     linear-gradient(135deg,
       rgba(255,255,255,0.05),
       rgba(255,255,255,0.02)
     );
   padding: 16px 16px;
-  color: var(--zenith-turq); /* Metin rengi AI vurgusuna ayarlandı */
-  font-size: 14px;
-  line-height: 1.5;
-  font-family: monospace; /* Terminal hissi için monospace */
-  box-shadow: inset 0 0 5px rgba(92,200,255,0.2);
+  color: var(--zenith-ink);
+  font-size: 14.5px; /* büyüttük */
+  line-height: 1.55;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+  transition: border-color .15s ease, box-shadow .15s ease;
 }
+
 .zenith-textarea::placeholder{
-  color: rgba(92,200,255,0.5); /* Placeholder rengi AI vurgusuyla uyumlu */
+  color: rgba(227,234,255,0.45);
 }
+
 .zenith-textarea:focus{
-  border-color: var(--zenith-turq);
-  box-shadow: 0 0 0 4px rgba(92,200,255,0.25), inset 0 0 5px rgba(92,200,255,0.4); /* Fokus glow güçlendirildi */
   outline: none;
+  border-color: rgba(92,200,255,0.55);
+  box-shadow: var(--zenith-focus);
 }
 
-/* 10) Başlıklar biraz daha kurumsal (AI Canlılığı) */
-.text-zenith-primary{ color: var(--zenith-turq); text-shadow: 0 0 5px rgba(92,200,255,0.3); } /* Glow eklendi */
-.text-zenith-ink{ color: var(--zenith-ink); }
-.text-zenith-muted{ color: var(--zenith-muted); }
+/* -----------------------------
+   9) Alerts
+-------------------------------- */
+.zenith-alert{
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+}
 
-/* 11) Shimmer yumuşatma (AI Veri Akışı) */
+.zenith-alert-danger{
+  background: rgba(255, 76, 76, 0.10);
+  border: 1px solid rgba(255, 76, 76, 0.35);
+  color: #ffd9d9;
+}
+
+/* -----------------------------
+   10) Shimmer
+-------------------------------- */
 .zenith-shimmer{
   background: linear-gradient(90deg,
-    rgba(92,200,255,0.05), /* Turkuaz başlangıç */
-    rgba(125,107,255,0.15), /* Mor parlama */
-    rgba(92,200,255,0.05)); /* Turkuaz bitiş */
+    rgba(92,200,255,0.06),
+    rgba(124,107,255,0.16),
+    rgba(92,200,255,0.06)
+  );
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
+  animation: zenithShimmer 1.4s infinite linear;
 }
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+@keyframes zenithShimmer{
+  0%{ background-position: -200% 0; }
+  100%{ background-position: 200% 0; }
 }
 
-/* 12) Genel küçük kalite dokunuşu */
+/* -----------------------------
+   11) Entrance animation
+-------------------------------- */
 .animate-card-in{
-  animation: zenithIn .3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Yumuşak giriş animasyonu */
+  animation: zenithIn .28s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-/* Keyframe'i tanımlamayı unutmayın, aksi takdirde çalışmaz */
-@keyframes zenithIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-/* =========================================================
-   Zenith - Usability & Corporate Clarity Override
-   AI Enhanced patch'in altına aynen ekle.
-   Amaç: parlamayı azalt, okuma/hiyerarşi güçlensin.
-   ========================================================= */
-
-/* Kart border'ı neon yerine kurumsal yumuşak */
-.zenith-card{
-  border: 1px solid rgba(255,255,255,0.10) !important;
-  box-shadow: var(--zenith-shadow-soft) !important;
-}
-.zenith-card:hover{
-  transform: translateY(-1px) !important;
-  box-shadow: var(--zenith-shadow-raise) !important;
+@keyframes zenithIn{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: translateY(0); }
 }
 
-/* Chipler uppercase + aşırı glow yerine temiz */
-.zenith-chip{
-  text-transform: none !important;
-  letter-spacing: .02em !important;
-  font-weight: 800 !important;
-  border: 1px solid rgba(255,255,255,0.10) !important;
-  box-shadow: none !important;
+/* -----------------------------
+   12) Small polish
+-------------------------------- */
+select, textarea, input{
+  font-family: inherit;
 }
 
-/* Butonlarda uppercase kapat, göz yormasın */
-.zenith-btn{
-  text-transform: none !important;
-  letter-spacing: .01em !important;
-}
-
-/* Textarea'yı terminal modundan çıkar */
-.zenith-textarea{
-  font-family: inherit !important;
-  color: var(--zenith-ink) !important;
-  border-color: rgba(255,255,255,0.12) !important;
-  box-shadow: inset 0 0 0 rgba(0,0,0,0) !important;
-}
-.zenith-textarea::placeholder{
-  color: rgba(226,232,255,0.45) !important;
-}
-
-/* Sağ paneldeki küçük kartların arka planını eşitle */
-.zenith-stat{
-  border: 1px solid rgba(255,255,255,0.10) !important;
-  box-shadow: none !important;
-}
-/* =========================================================
-   Corporate Readability Patch
-   - Daha büyük metin
-   - Butonlar daha kurumsal
-   ========================================================= */
-
-.zenith-card p,
-.zenith-card li,
-.text-zenith-muted {
-  font-size: 14.5px;
-}
-
-.zenith-textarea{
-  font-size: 15.5px;
-  line-height: 1.6;
-}
-
-/* Butonlar daha kurumsal: bağıran uppercase’i bırak */
-.zenith-btn{
-  font-size: 14.5px;
-  text-transform: none;
-  letter-spacing: 0.01em;
-  font-weight: 700;
-}
-
-/* Ana CTA daha net ayrılsın */
-.zenith-btn-primary{
-  font-size: 15px;
-}
-
-/* Chipler biraz büyüsün */
-.zenith-chip{
-  font-size: 11px;
+/* Optional: sağ panel iç beyaz kutular fazla parlak olmasın */
+.bg-white{
+  background-color: rgba(255,255,255,0.96);
 }
