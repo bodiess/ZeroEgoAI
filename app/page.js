@@ -545,7 +545,17 @@ export default function HomePage() {
 
       <div className="relative z-10 px-4 pt-8 pb-12">
         <div className="mx-auto max-w-7xl">
-          {/* Top bar */}
+          <div className="zenith-card px-4 py-2 mb-4">
+  <div className="flex flex-wrap items-center gap-2">
+    <span className="zenith-chip">Ton Radar</span>
+    <span className="zenith-chip">Önyargı Uyarıları</span>
+    <span className="zenith-chip">Sürpriz İçgörü</span>
+    <span className="zenith-chip">Aksiyon Planı</span>
+    <span className="zenith-chip">Rewrite</span>
+  </div>
+</div>
+
+		  {/* Top bar */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.06] text-xs font-semibold text-zenith-muted">
               ⚡ Zero Ego • Ultra Premium
@@ -597,7 +607,9 @@ export default function HomePage() {
                       disabled={rewriteLoading || isLoading}
                       className="zenith-btn-gold"
                     >
-                      {rewriteLoading ? "..." : "Yumuşat"}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+  
+					  {rewriteLoading ? "..." : "Yumuşat"}
                     </button>
 
                     <button
