@@ -539,8 +539,9 @@ export default function HomePage() {
   return (
     <div className="relative min-h-screen bg-zenith-bg overflow-hidden">
       {/* Soft mesh background (globals.css varsa premium görünür) */}
-      <div className="absolute inset-0 zenith-mesh opacity-30 pointer-events-none" />
-      <div className="ab{/* ================= RIGHT PANEL ================= */}
+      <div className="absolute -top-40 -left-40 w-[520px] h-[520px] zenith-orb zenith-orb-a pointer-events-none" />
+<div className="absolute -bottom-48 -right-48 w-[560px] h-[560px] zenith-orb zenith-orb-b pointer-events-none" />
+
 {showRightPanel ? (
   <div className="lg:col-span-7 space-y-6">
     {/* Stats row */}
@@ -831,14 +832,12 @@ ute -top-40 -left-40 w-[520px] h-[520px] zenith-orb zenith-orb-a pointer-events-
           </div>
 
           {/* Top bar */}
-            <div className="flex flex-wrap gap-2">
-              <span className="zenith-chip">Ton Radar</span>
-              <span className="zenith-chip">Önyargı Uyarıları</span>
-              <span className="zenith-chip">Sürpriz İçgörü</span>
-              <span className="zenith-chip">Aksiyon Planı</span>
-              <span className="zenith-chip">Rewrite</span>
-            </div>
-          </div>
+<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.06] text-xs font-semibold text-zenith-muted">
+    ⚡ Zero Ego • Ultra Premium
+  </div>
+</div>
+
 
           {/* Main grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
