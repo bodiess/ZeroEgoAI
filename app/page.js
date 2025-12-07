@@ -600,36 +600,35 @@ export default function HomePage() {
                   />
 
                   {/* Rewrite buttons */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleRewrite("soften")}
-                      disabled={rewriteLoading || isLoading}
-                      className="zenith-btn-gold"
-                    >
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-  
-					  {rewriteLoading ? "..." : "Yumuşat"}
-                    </button>
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+  <button
+    type="button"
+    onClick={() => handleRewrite("soften")}
+    disabled={rewriteLoading || isLoading}
+    className="zenith-btn-gold"
+  >
+    {rewriteLoading ? "..." : "Yumuşat"}
+  </button>
 
-                    <button
-                      type="button"
-                      onClick={() => handleRewrite("clarify")}
-                      disabled={rewriteLoading || isLoading}
-                      className="zenith-btn bg-black/[0.04] text-zenith-ink"
-                    >
-                      {rewriteLoading ? "..." : "Netleştir"}
-                    </button>
+  <button
+    type="button"
+    onClick={() => handleRewrite("clarify")}
+    disabled={rewriteLoading || isLoading}
+    className="zenith-btn bg-black/[0.04] text-zenith-ink"
+  >
+    {rewriteLoading ? "..." : "Netleştir"}
+  </button>
 
-                    <button
-                      type="button"
-                      onClick={() => handleRewrite("assertive")}
-                      disabled={rewriteLoading || isLoading}
-                      className="zenith-btn-primary"
-                    >
-                      {rewriteLoading ? "..." : "Güçlü & Saygılı"}
-                    </button>
-                  </div>
+  <button
+    type="button"
+    onClick={() => handleRewrite("assertive")}
+    disabled={rewriteLoading || isLoading}
+    className="zenith-btn-primary"
+  >
+    {rewriteLoading ? "..." : "Güçlü & Saygılı"}
+  </button>
+</div>
+
 
                   {/* Analyze CTA */}
                   <button
