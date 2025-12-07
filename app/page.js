@@ -642,36 +642,37 @@ export default function HomePage() {
                 )}
 
                 {/* Rewrite Result */}
-                {rewriteText && (
-                  <section className="mt-5 zenith-card p-4 animate-card-in">
-                    <div className="flex items-center justify-between gap-2">
-                      <h3 className="font-bold text-zenith-ink">
-                        ✨ Önerilen Metin
-                      </h3>
-                      <div className="flex gap-2">
-                        <button
-                          type="button"
-                          onClick={copyRewrite}
-                          className="px-3 py-1.5 rounded-lg bg-black text-white text-xs font-bold"
-                        >
-                          Kopyala
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setDecisionText(rewriteText)}
-                          className="px-3 py-1.5 rounded-lg bg-black/[0.05] text-xs font-bold"
-                        >
-                          Uygula
-                        </button>
-                      </div>
-                    </div>
-                    <textarea
-                      className="w-full mt-3 p-3 border border-zenith-border rounded-lg bg-black/[0.02]"
-                      rows={5}
-                      readOnly
-                      value={rewriteText}
-                    />
-                  </section>
+{rewriteText && (
+  <section className="mt-5 zenith-card p-4 animate-card-in">
+    <div className="flex items-center justify-between gap-2">
+      <h3 className="font-bold text-zenith-ink">✨ Önerilen Metin</h3>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={copyRewrite}
+          className="px-3 py-1.5 rounded-lg bg-black text-white text-xs font-bold"
+        >
+          Kopyala
+        </button>
+        <button
+          type="button"
+          onClick={() => setDecisionText(rewriteText)}
+          className="px-3 py-1.5 rounded-lg bg-black/[0.05] text-xs font-bold"
+        >
+          Uygula
+        </button>
+      </div>
+    </div>
+
+    <textarea
+      className="w-full mt-3 p-3 border border-zenith-border rounded-lg bg-black/[0.02]"
+      rows={5}
+      readOnly
+      value={rewriteText}
+    />
+  </section>
+)}
+
                 
               </div>
 
@@ -762,7 +763,7 @@ export default function HomePage() {
                 )}
 
                 {/* Results grid */}
-                {analysisResult && (
+{analysisResult && (
   <>
     <PerceptionSurvey
       analysis={analysisResult}
@@ -770,237 +771,132 @@ export default function HomePage() {
     />
 
     <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* kartların burada */}
+      {/* Compound score card */}
+      <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
+        <div className="text-xs font-semibold text-zenith-muted">
+          Bileşik Skor
+        </div>
+        <div className="mt-2 text-4xl font-extrabold text-zenith-ink">
+          {Number(analysisResult.bileşik_skor).toFixed(3)}
+        </div>
+        <p className="mt-2 text-sm text-zenith-muted">
+          Skor metindeki duygu yönü ve yoğunluğunu özetler.
+        </p>
+
+        {riskNote && (
+          <div className="mt-3 p-3 rounded-lg bg-white border border-zenith-border text-sm text-zenith-ink">
+            <span className="font-bold">Not:</span> {riskNote}
+          </div>
+        )}
+      </div>
+
+      {/* Tone distribution */}
+      <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
+        <div className="text-xs font-semibold text-zenith-muted">
+          Ton Dağılımı
+        </div>
+
+        {percents && (
+          <div className="mt-4 space-y-3">
+            <div>
+              <div className="flex justify-between text-[11px] font-semibold">
+                <span className="text-green-700">Pozitif</span>
+                <span>{percents.pos}%</span>
+              </div>
+              <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                <div
+                  className="h-2 bg-green-500"
+                  style={{ width: `${percents.pos}%` }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex justify-between text-[11px] font-semibold">
+                <span className="text-gray-700">Nötr</span>
+                <span>{percents.neu}%</span>
+              </div>
+              <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                <div
+                  className="h-2 bg-gray-500"
+                  style={{ width: `${percents.neu}%` }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex justify-between text-[11px] font-semibold">
+                <span className="text-red-700">Negatif</span>
+                <span>{percents.neg}%</span>
+              </div>
+              <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                <div
+                  className="h-2 bg-red-500"
+                  style={{ width: `${percents.neg}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Bias alerts */}
+      <div className="p-5 rounded-xl bg-white border border-zenith-border">
+        <div className="text-xs font-semibold text-zenith-muted">
+          Önyargı Uyarıları
+        </div>
+        <ul className="mt-3 space-y-2 text-sm">
+          {biasAlerts.length === 0 && (
+            <li className="text-zenith-muted">
+              Analiz uyarıları burada listelenecek.
+            </li>
+          )}
+          {biasAlerts.map((b, i) => (
+            <li key={i} className="flex items-start gap-2">
+              <span className="mt-1 inline-block w-2 h-2 rounded-full bg-zenith-accent" />
+              <span className="text-zenith-ink">{b}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Action checklist */}
+      <div className="p-5 rounded-xl bg-white border border-zenith-border">
+        <div className="text-xs font-semibold text-zenith-muted">
+          Aksiyon Planı
+        </div>
+
+        <div className="mt-3 space-y-2 text-sm">
+          {[
+            { key: "breathe", label: "10 saniye durakla ve yeniden oku" },
+            { key: "shorten", label: "Metni %20 kısalt" },
+            { key: "counter", label: "Karşı tez ekle" },
+            { key: "risk", label: "Risk sınırını yaz" },
+          ].map((it) => (
+            <label
+              key={it.key}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                checked={checks[it.key]}
+                onChange={() => toggleCheck(it.key)}
+                className="accent-black"
+              />
+              <span
+                className={
+                  checks[it.key]
+                    ? "line-through text-zenith-muted"
+                    : "text-zenith-ink"
+                }
+              >
+                {it.label}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
     </div>
   </>
 )}
 
-                    {/* Compound score card */}
-                    <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
-                      <div className="text-xs font-semibold text-zenith-muted">
-                        Bileşik Skor
-                      </div>
-                      <div className="mt-2 text-4xl font-extrabold text-zenith-ink">
-                        {Number(analysisResult.bileşik_skor).toFixed(3)}
-                      </div>
-                      <p className="mt-2 text-sm text-zenith-muted">
-                        Skor metindeki duygu yönü ve yoğunluğunu özetler.
-                      </p>
-
-                      {riskNote && (
-                        <div className="mt-3 p-3 rounded-lg bg-white border border-zenith-border text-sm text-zenith-ink">
-                          <span className="font-bold">Not:</span> {riskNote}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Tone distribution */}
-                    <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
-                      <div className="text-xs font-semibold text-zenith-muted">
-                        Ton Dağılımı
-                      </div>
-
-                      {percents && (
-                        <div className="mt-4 space-y-3">
-                          <div>
-                            <div className="flex justify-between text-[11px] font-semibold">
-                              <span className="text-green-700">Pozitif</span>
-                              <span>{percents.pos}%</span>
-                            </div>
-                            <div className="h-2 rounded-full bg-black/10 overflow-hidden">
-                              <div
-                                className="h-2 bg-green-500"
-                                style={{ width: `${percents.pos}%` }}
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <div className="flex justify-between text-[11px] font-semibold">
-                              <span className="text-gray-700">Nötr</span>
-                              <span>{percents.neu}%</span>
-                            </div>
-                            <div className="h-2 rounded-full bg-black/10 overflow-hidden">
-                              <div
-                                className="h-2 bg-gray-500"
-                                style={{ width: `${percents.neu}%` }}
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <div className="flex justify-between text-[11px] font-semibold">
-                              <span className="text-red-700">Negatif</span>
-                              <span>{percents.neg}%</span>
-                            </div>
-                            <div className="h-2 rounded-full bg-black/10 overflow-hidden">
-                              <div
-                                className="h-2 bg-red-500"
-                                style={{ width: `${percents.neg}%` }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Bias alerts */}
-                    <div className="p-5 rounded-xl bg-white border border-zenith-border">
-                      <div className="text-xs font-semibold text-zenith-muted">
-                        Önyargı Uyarıları
-                      </div>
-                      <ul className="mt-3 space-y-2 text-sm">
-                        {biasAlerts.length === 0 && (
-                          <li className="text-zenith-muted">
-                            Analiz uyarıları burada listelenecek.
-                          </li>
-                        )}
-                        {biasAlerts.map((b, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="mt-1 inline-block w-2 h-2 rounded-full bg-zenith-accent" />
-                            <span className="text-zenith-ink">{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Action checklist */}
-                    <div className="p-5 rounded-xl bg-white border border-zenith-border">
-                      <div className="text-xs font-semibold text-zenith-muted">
-                        Aksiyon Planı
-                      </div>
-
-                      <div className="mt-3 space-y-2 text-sm">
-                        {[
-                          { key: "breathe", label: "10 saniye durakla ve yeniden oku" },
-                          { key: "shorten", label: "Metni %20 kısalt" },
-                          { key: "counter", label: "Karşı tez ekle" },
-                          { key: "risk", label: "Risk sınırını yaz" },
-                        ].map((it) => (
-                          <label
-                            key={it.key}
-                            className="flex items-center gap-2 cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={checks[it.key]}
-                              onChange={() => toggleCheck(it.key)}
-                              className="accent-black"
-                            />
-                            <span
-                              className={
-                                checks[it.key]
-                                  ? "line-through text-zenith-muted"
-                                  : "text-zenith-ink"
-                              }
-                            >
-                              {it.label}
-                            </span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Quick Templates */}
-              <div className="zenith-card zenith-card-raise p-6 animate-card-in">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-extrabold text-zenith-ink">
-                    ⚡ Hızlı Şablonlar
-                  </h3>
-                  <span className="zenith-chip">1 tık</span>
-                </div>
-
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {QUICK_TEMPLATES.map((t) => (
-                    <button
-                      key={t.key}
-                      type="button"
-                      onClick={() => applyTemplate(t.key)}
-                      className="px-3 py-1.5 rounded-full text-xs font-bold bg-black/[0.04] hover:bg-black/[0.08] transition"
-                    >
-                      {t.label}
-                    </button>
-                  ))}
-                </div>
-
-                <p className="mt-3 text-[11px] text-zenith-muted">
-                  Bu şablonlar metin düzenleme amaçlıdır. Yatırım tavsiyesi değildir.
-                </p>
-              </div>
-
-              {/* Binance CTA (premium + şeffaf) */}
-              {analysisResult && (
-                <div className="zenith-card zenith-card-raise p-6 animate-card-in">
-                  <div className="flex items-center justify-between">
-                    <span className="zenith-chip">Destek & Avantaj</span>
-                    <span className="text-[10px] font-bold text-zenith-muted">
-                      sponsor öneri
-                    </span>
-                  </div>
-
-                  <h3 className="mt-3 text-lg font-extrabold text-zenith-ink">
-                    💛 Zenith Topluluğuna Katıl
-                  </h3>
-
-                  <p className="mt-2 text-sm text-zenith-muted">
-                    Eğer Binance hesabı açmayı zaten düşünüyorsan, bu link üzerinden
-                    kayıt olarak <strong>Zenith Decision</strong>’ın gelişimine destek
-                    olabilirsin.
-                  </p>
-
-                  <ul className="mt-3 space-y-1 text-xs text-zenith-muted">
-                    <li>• Zorunlu değil, tamamen isteğe bağlı.</li>
-                    <li>• Bu içerik yatırım tavsiyesi değildir.</li>
-                    <li>• Kampanya/avantaj koşulları Binance tarafından belirlenir.</li>
-                  </ul>
-
-                  <a
-                    href={BINANCE_REF}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-4 inline-flex items-center justify-center w-full zenith-btn-gold"
-                  >
-                    Binance’e Katıl & Zenith’i Destekle
-                  </a>
-                </div>
-              )}
-
-              {/* Message Power (right deep card) */}
-              <div className="zenith-card p-6 animate-card-in">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-extrabold text-zenith-ink">
-                    🧠 Netlik & Güç Göstergesi
-                  </h3>
-                  <span className="zenith-chip">premium ui</span>
-                </div>
-
-                <div className="mt-4 p-4 rounded-xl bg-black/[0.03] border border-zenith-border">
-                  <div className="text-xs font-semibold text-zenith-muted">
-                    Mesaj Gücü Skoru
-                  </div>
-                  <div className="mt-1 flex items-baseline gap-2">
-                    <span className="text-4xl font-black text-zenith-ink">
-                      {power.score}
-                    </span>
-                    <span className="text-sm font-bold text-zenith-muted">
-                      /100 • {power.label}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-sm text-zenith-muted">{power.hint}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="text-center text-[10px] text-zenith-muted mt-10">
-            Beta • Zero Ego AI • Ultra Premium UI Layer
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
