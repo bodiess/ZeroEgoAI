@@ -427,6 +427,10 @@ export default function HomePage() {
 
   const power = useMemo(() => messagePowerScore(decisionText), [decisionText]);
 
+  const hasText = decisionText.trim().length > 0;
+  const showRightPanel = isLoading || analysisResult || rewriteLoading || rewriteText;
+  const showBinanceBox = hasText || analysisResult;
+
   // =========================================================
   // Actions
   // =========================================================
@@ -724,7 +728,9 @@ export default function HomePage() {
             </div>
 
             {/* ================= RIGHT PANEL ================= */}
-            <div className="lg:col-span-7 space-y-6">
+                        {showRightPanel ? (
+              <div className="lg:col-span-7 space-y-6">
+
               {/* Stats row */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="zenith-stat animate-card-in">
@@ -754,7 +760,21 @@ export default function HomePage() {
                   <div className="zenith-stat-value">Aktif</div>
                   <div className="zenith-stat-sub">Soft elit UI</div>
                 </div>
+                             </div>
+            ) : (
+              <div className="lg:col-span-7">
+                <div className="zenith-card zenith-card-raise p-8 animate-card-in">
+                  <h3 className="text-xl font-extrabold text-zenith-ink">
+                    Başlamak için karar metnini yaz 👈
+                  </h3>
+                  <p className="mt-2 text-sm text-zenith-muted">
+                    Metni girince sağ tarafta Ton Radar, Önyargı Uyarıları ve Aksiyon Planı otomatik açılacak.
+                  </p>
+                </div>
               </div>
+            )}
+
+			  </div>
 
               {/* Main Analysis Mega Card */}
               <div className="zenith-card p-7 animate-card-in">
@@ -782,32 +802,22 @@ export default function HomePage() {
                 )}
 
                 {/* Results grid */}
-                {analysisResult && (
-                  <>
-                    <PerceptionSurvey
-                      analysis={analysisResult}
-                      originalText={decisionText}
-                    />
+                              {showBinanceBox && (
+                <div className="zenith-card zenith-card-raise p-6 animate-card-in">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-extrabold text-zenith-ink">💛 Destek</h3>
+                    <span className="zenith-chip">affiliate</span>
+                  </div>
+                  <p className="mt-2 text-sm text-zenith-muted">
+                    Eğer istersen Binance üzerinden kayıt olarak Zenith’in gelişimine katkı sağlayabilirsin.
+                  </p>
+                  {BINANCE_CTA}
+                  <p className="text-center text-xs text-zenith-muted mt-2 opacity-75">
+                    Ref Kodu: CPA_003RRA9B6U
+                  </p>
+                </div>
+              )}
 
-                    <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Compound score card */}
-                      <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
-                        <div className="text-xs font-semibold text-zenith-muted">
-                          Bileşik Skor
-                        </div>
-                        <div className="mt-2 text-4xl font-extrabold text-zenith-ink">
-                          {Number(analysisResult.bileşik_skor).toFixed(3)}
-                        </div>
-                        <p className="mt-2 text-sm text-zenith-muted">
-                          Skor metindeki duygu yönü ve yoğunluğunu özetler.
-                        </p>
-
-                        {riskNote && (
-                          <div className="mt-3 p-3 rounded-lg bg-white border border-zenith-border text-sm text-zenith-ink">
-                            <span className="font-bold">Not:</span> {riskNote}
-                          </div>
-                        )}
-                      </div>
 
                       {/* Tone distribution */}
                       <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
