@@ -603,98 +603,68 @@ export default function HomePage() {
 
 
                 <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-                  <label className="block text-sm font-medium text-zenith-ink">
-                    Karar Metni
-                  </label>
+  <label className="block text-sm font-medium text-zenith-ink">
+    Karar Metni
+  </label>
 
-                  <textarea
-                    rows={8}
-                    className="zenith-textarea"
-                    placeholder="Örnek: 'Tüm paramla X'e girmeyi düşünüyorum...'"
-                    value={decisionText}
-                    onChange={(e) => setDecisionText(e.target.value)}
-                    disabled={isLoading || rewriteLoading}
-                    required
-                  />
+  <textarea
+    rows={8}
+    className="zenith-textarea"
+    placeholder="Örnek: 'Tüm paramla X'e girmeyi düşünüyorum...'"
+    value={decisionText}
+    onChange={(e) => setDecisionText(e.target.value)}
+    disabled={isLoading || rewriteLoading}
+    required
+  />
 
-                  {/* ANA CTA */}
-<button
-  type="submit"
-  disabled={isLoading}
-  className={`w-full zenith-btn-primary text-base ${
-    isLoading ? "opacity-60 cursor-not-allowed" : ""
-  }`}
->
-  {isLoading ? "Analiz Ediliyor..." : "Kararı Analiz Et"}
-</button>
+  {/* ANA CTA */}
+  <button
+    type="submit"
+    disabled={isLoading}
+    className={`w-full zenith-btn-primary text-base ${
+      isLoading ? "opacity-60 cursor-not-allowed" : ""
+    }`}
+  >
+    {isLoading ? "Analiz Ediliyor..." : "Kararı Analiz Et"}
+  </button>
 
-{/* Rewrite area - ikincil aksiyonlar */}
-<div className="mt-3">
-  <div className="text-sm font-semibold text-zenith-muted mb-2">
-    Mesajını profesyonelleştir (opsiyonel)
+  {/* Rewrite area - ikincil aksiyonlar */}
+  <div className="pt-2">
+    <div className="text-sm font-semibold text-zenith-muted mb-2">
+      Mesajını profesyonelleştir (opsiyonel)
+    </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+      <button
+        type="button"
+        onClick={() => handleRewrite("soften")}
+        disabled={rewriteLoading || isLoading}
+        className="zenith-btn"
+      >
+        {rewriteLoading ? "..." : "Yumuşat"}
+      </button>
+
+      <button
+        type="button"
+        onClick={() => handleRewrite("clarify")}
+        disabled={rewriteLoading || isLoading}
+        className="zenith-btn"
+      >
+        {rewriteLoading ? "..." : "Netleştir"}
+      </button>
+
+      <button
+        type="button"
+        onClick={() => handleRewrite("assertive")}
+        disabled={rewriteLoading || isLoading}
+        className="zenith-btn"
+      >
+        {rewriteLoading ? "..." : "Güçlü & Saygılı"}
+      </button>
+    </div>
   </div>
+</form>
 
-  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-    <button
-      type="button"
-      onClick={() => handleRewrite("soften")}
-      disabled={rewriteLoading || isLoading}
-      className="zenith-btn"
-    >
-      {rewriteLoading ? "..." : "Yumuşat"}
-    </button>
-
-    <button
-      type="button"
-      onClick={() => handleRewrite("clarify")}
-      disabled={rewriteLoading || isLoading}
-      className="zenith-btn"
-    >
-      {rewriteLoading ? "..." : "Netleştir"}
-    </button>
-
-    <button
-      type="button"
-      onClick={() => handleRewrite("assertive")}
-      disabled={rewriteLoading || isLoading}
-      className="zenith-btn"
-    >
-      {rewriteLoading ? "..." : "Güçlü & Saygılı"}
-    </button>
-  </div>
-</div>
-
-
-                    <button
-                      type="button"
-                      onClick={() => handleRewrite("clarify")}
-                      disabled={rewriteLoading || isLoading}
-                      className="zenith-btn bg-black/[0.04] text-zenith-ink"
-                    >
-                      {rewriteLoading ? "..." : "Netleştir"}
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => handleRewrite("assertive")}
-                      disabled={rewriteLoading || isLoading}
-                      className="zenith-btn-primary"
-                    >
-                      {rewriteLoading ? "..." : "Güçlü & Saygılı"}
-                    </button>
-                  </div>
-
-                  {/* Analyze CTA */}
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full zenith-btn-gold text-base ${
-                      isLoading ? "opacity-60 cursor-not-allowed" : ""
-                    }`}
-                  >
-                    {isLoading ? "Analiz Ediliyor..." : "Kararı Analiz Et"}
-                  </button>
-                </form>
 
                 {/* Errors */}
                 {rewriteError && (
