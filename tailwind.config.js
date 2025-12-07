@@ -8,7 +8,8 @@ module.exports = {
     extend: {
       colors: {
         // CSS variable tabanlı - güvenli ve esnek
-        "zenith-bg": "rgb(var(--zenith-bg) / <alpha-value>)",
+        "zenith-turq": "rgb(var(--zenith-turq) / <alpha-value>)",
+		"zenith-bg": "rgb(var(--zenith-bg) / <alpha-value>)",
         "zenith-surface": "rgb(var(--zenith-surface) / <alpha-value>)",
         "zenith-ink": "rgb(var(--zenith-ink) / <alpha-value>)",
         "zenith-muted": "rgb(var(--zenith-muted) / <alpha-value>)",

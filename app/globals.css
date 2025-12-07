@@ -6,24 +6,26 @@
    Ultra Elite Soft Theme
    --------------------------- */
 :root {
-  /* Arka plan - pearl */
-  --zenith-bg: 248 250 252;         /* #f8fafc */
-  --zenith-surface: 255 255 255;    /* white */
+  /* Zeminler */
+  --zenith-bg: 250 248 242;        /* KREM */
+  --zenith-surface: 255 255 255;  /* BEYAZ */
 
-  /* Yazı - koyu lacivert/ink */
-  --zenith-ink: 10 16 28;           /* near navy */
-  --zenith-muted: 100 116 139;      /* slate-500 */
+  /* Yazı */
+  --zenith-ink: 9 20 40;          /* LACİVERT - metin */
+  --zenith-muted: 100 116 139;
 
-  /* Marka ana renk - deep midnight */
-  --zenith-primary: 11 18 32;       /* #0b1220 */
+  /* Marka */
+  --zenith-primary: 9 20 40;      /* LACİVERT */
+  --zenith-accent: 212 175 55;    /* GOLD */
+  --zenith-accent-soft: 247 232 188; /* soft gold */
 
-  /* Altın ama soft - "champagne gold" */
-  --zenith-accent: 242 217 141;     /* #F2D98D */
-  --zenith-accent-soft: 252 243 214;/* very soft gold */
+  /* Ek vurgu */
+  --zenith-turq: 18 184 184;      /* TURKUAZ */
 
   /* Border */
-  --zenith-border: 226 232 240;     /* slate-200 */
+  --zenith-border: 226 232 240;
 }
+
 
 /* Base typography */
 html, body {
@@ -65,6 +67,14 @@ body {
            rounded-zenith
            shadow-zenith;
   }
+
+@layer components {
+  .zenith-btn-turq{
+    @apply px-4 py-2.5 rounded-xl font-extrabold
+           bg-zenith-turq text-white
+           shadow-sm transition duration-150;
+  }
+}
 
   /* Kart hover "elit lift" */
   .zenith-card-raise {

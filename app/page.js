@@ -14,6 +14,15 @@ import React, { useMemo, useState } from "react";
 
 const BINANCE_REF =
   "https://www.binance.com/activity/referral-entry/CPA?ref=CPA_003RRA9B6U";
+<a
+  href={BINANCE_REF}
+  target="_blank"
+  rel="noreferrer"
+  className="mt-4 inline-flex items-center justify-center w-full zenith-btn-gold"
+>
+  Binance’e Katıl & Zenith’i Destekle
+</a>
+
 
 const SURPRISE_TIPS = [
   {
@@ -111,6 +120,45 @@ function buildBiasAlerts(analysis) {
   return list.slice(0, 5);
 }
 
+function ToneMiniChart({ percents }) {
+  if (!percents) return null;
+
+  const items = [
+    { label: "Pozitif", value: percents.pos, cls: "bg-zenith-turq" },
+    { label: "Nötr", value: percents.neu, cls: "bg-black/30" },
+    { label: "Negatif", value: percents.neg, cls: "bg-zenith-accent" },
+  ];
+
+  return (
+    <div className="zenith-card p-5">
+      <div className="flex items-center justify-between">
+        <h4 className="text-sm font-extrabold text-zenith-ink">
+          📊 Ton İstatistikleri
+        </h4>
+        <span className="zenith-chip">gold • navy • turq</span>
+      </div>
+
+      <div className="mt-4 space-y-3">
+        {items.map((it, i) => (
+          <div key={i}>
+            <div className="flex justify-between text-[11px] font-semibold text-zenith-muted">
+              <span>{it.label}</span>
+              <span>{it.value}%</span>
+            </div>
+            <div className="h-2.5 rounded-full bg-black/10 overflow-hidden">
+              <div
+                className={`h-2.5 ${it.cls}`}
+                style={{ width: `${it.value}%` }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
 function riskNoteText(analysis) {
   if (!analysis) return null;
   const s = analysis.bileşik_skor ?? 0;
@@ -120,6 +168,153 @@ function riskNoteText(analysis) {
     return "Aşırı coşku tonu. Netleştir ve karşı tez ekle.";
   return "Ton dengeli. Metni %20 kısaltman mesaj gücünü artırabilir.";
 }
+
+function PerceptionSurvey({ analysis, originalText }) {
+  const [answer1, setAnswer1] = useState("");
+  const [answer2, setAnswer2] = useState("");
+  const [answer3, setAnswer3] = useState("");
+  const [note, setNote] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [ok, setOk] = useState(false);
+  const [err, setErr] = useState(null);
+
+  const submit = async () => {
+    setLoading(true);
+    setErr(null);
+    setOk(false);
+
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          answers: { answer1, answer2, answer3, note },
+          analysis,
+          // text’i full göndermek yerine opsiyonel kısaltılmış göndermek daha iyi
+          text_sample: (originalText || "").slice(0, 280),
+          ts: Date.now(),
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) setOk(true);
+      else setErr(data.error || "Geri bildirim alınamadı.");
+    } catch {
+      setErr("Bağlantı hatası.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="zenith-card zenith-card-raise p-6">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-extrabold text-zenith-ink">
+          🧪 Kısa Gözlem Anketi
+        </h3>
+        <span className="zenith-chip">AI training</span>
+      </div>
+
+      <p className="mt-2 text-sm text-zenith-muted">
+        Bu 3 soruluk mini anket, Zenith Decision motorunu geliştirmek içindir.
+        <b> İsteğe bağlıdır.</b> Cevaplar anonimleştirilerek kullanılır.
+      </p>
+
+      <div className="mt-4 space-y-3 text-sm">
+        <div>
+          <label className="font-semibold text-zenith-ink">
+            1) Metinde en baskın gördüğün duygu neydi?
+          </label>
+          <select
+            value={answer1}
+            onChange={(e) => setAnswer1(e.target.value)}
+            className="mt-1 w-full p-2 rounded-lg border border-zenith-border bg-white"
+          >
+            <option value="">Seç</option>
+            <option>Korku</option>
+            <option>Coşku / FOMO</option>
+            <option>Kararsızlık</option>
+            <option>Güven</option>
+            <option>Nötr</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="font-semibold text-zenith-ink">
+            2) Bu analize güven seviyen?
+          </label>
+          <select
+            value={answer2}
+            onChange={(e) => setAnswer2(e.target.value)}
+            className="mt-1 w-full p-2 rounded-lg border border-zenith-border bg-white"
+          >
+            <option value="">Seç</option>
+            <option>Çok yüksek</option>
+            <option>Yüksek</option>
+            <option>Orta</option>
+            <option>Düşük</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="font-semibold text-zenith-ink">
+            3) Analiz sonrası ne yapardın?
+          </label>
+          <select
+            value={answer3}
+            onChange={(e) => setAnswer3(e.target.value)}
+            className="mt-1 w-full p-2 rounded-lg border border-zenith-border bg-white"
+          >
+            <option value="">Seç</option>
+            <option>Hemen aksiyon</option>
+            <option>Bekler, tekrar değerlendiririm</option>
+            <option>Planımı değiştiririm</option>
+            <option>Kararı iptal ederim</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="font-semibold text-zenith-ink">
+            Ek not (opsiyonel)
+          </label>
+          <textarea
+            rows={3}
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            className="mt-1 w-full p-2 rounded-lg border border-zenith-border bg-white"
+            placeholder="1 cümle bile yeter..."
+          />
+        </div>
+      </div>
+
+      {err && (
+        <div className="mt-3 zenith-alert zenith-alert-danger">
+          {err}
+        </div>
+      )}
+
+      {ok && (
+        <div className="mt-3 p-3 rounded-lg bg-zenith-accent-soft border border-zenith-border text-sm font-bold">
+          Teşekkürler! Bu katkı motoru güçlendirecek. 💛
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={submit}
+        disabled={loading}
+        className="mt-4 zenith-btn-turq w-full"
+      >
+        {loading ? "Gönderiliyor..." : "Geri Bildirim Gönder"}
+      </button>
+
+      <p className="mt-2 text-[10px] text-zenith-muted">
+        Bu içerik yatırım tavsiyesi değildir.
+      </p>
+    </div>
+  );
+}
+
 
 // Basit “mesaj gücü” heuristiği (UI için)
 function messagePowerScore(text) {
@@ -568,7 +763,11 @@ export default function HomePage() {
 
                 {/* Results grid */}
                 {analysisResult && (
-                  <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {analysisResult && (
+  <PerceptionSurvey analysis={analysisResult} originalText={decisionText} />
+)}
+
+				  <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Compound score card */}
                     <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
                       <div className="text-xs font-semibold text-zenith-muted">
