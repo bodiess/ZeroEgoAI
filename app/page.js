@@ -538,289 +538,16 @@ export default function HomePage() {
   // =========================================================
   return (
     <div className="relative min-h-screen bg-zenith-bg overflow-hidden">
-      {/* Soft mesh background (globals.css varsa premium görünür) */}
+      {/* Soft mesh background */}
+      <div className="absolute inset-0 zenith-mesh opacity-30 pointer-events-none" />
+
+      {/* Orbs */}
       <div className="absolute -top-40 -left-40 w-[520px] h-[520px] zenith-orb zenith-orb-a pointer-events-none" />
-<div className="absolute -bottom-48 -right-48 w-[560px] h-[560px] zenith-orb zenith-orb-b pointer-events-none" />
-
-{showRightPanel ? (
-  <div className="lg:col-span-7 space-y-6">
-    {/* Stats row */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div className="zenith-stat animate-card-in">
-        <div className="zenith-stat-label">Durum</div>
-        <div className="zenith-stat-value">
-          {analysisResult ? "Analiz Hazır" : isLoading ? "İşleniyor" : "Beklemede"}
-        </div>
-        <div className="zenith-stat-sub">Ton motoru</div>
-      </div>
-
-      <div className="zenith-stat animate-card-in">
-        <div className="zenith-stat-label">Rewrite</div>
-        <div className="zenith-stat-value">
-          {rewriteText ? "1 Öneri" : rewriteLoading ? "Üretiliyor" : "Hazır"}
-        </div>
-        <div className="zenith-stat-sub">Tek tık güçlendirme</div>
-      </div>
-
-      <div className="zenith-stat animate-card-in">
-        <div className="zenith-stat-label">Premium</div>
-        <div className="zenith-stat-value">Aktif</div>
-        <div className="zenith-stat-sub">Soft elit UI</div>
-      </div>
-    </div>
-
-    {/* Main Analysis Mega Card */}
-    <div className="zenith-card p-7 animate-card-in">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <h2 className="text-2xl font-extrabold text-zenith-primary">
-          🧠 Ton Radar & Ego Haritası
-        </h2>
-        {compoundMeta && (
-          <span
-            className={`text-xs font-extrabold px-3 py-1.5 rounded-full border ${compoundMeta.pill} ${compoundMeta.color}`}
-          >
-            {compoundMeta.text}
-          </span>
-        )}
-      </div>
-
-      {/* Loading shimmer grid */}
-      {isLoading && !analysisResult && (
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="zenith-shimmer animate-shimmer h-28 rounded-xl" />
-          <div className="zenith-shimmer animate-shimmer h-28 rounded-xl" />
-          <div className="zenith-shimmer animate-shimmer h-28 rounded-xl" />
-          <div className="zenith-shimmer animate-shimmer h-28 rounded-xl" />
-        </div>
-      )}
-
-      {/* Results */}
-      {analysisResult && (
-        <>
-          <PerceptionSurvey
-            analysis={analysisResult}
-            originalText={decisionText}
-          />
-
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Compound score card */}
-            <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
-              <div className="text-xs font-semibold text-zenith-muted">
-                Bileşik Skor
-              </div>
-              <div className="mt-2 text-4xl font-extrabold text-zenith-ink">
-                {Number(analysisResult.bileşik_skor).toFixed(3)}
-              </div>
-              <p className="mt-2 text-sm text-zenith-muted">
-                Skor metindeki duygu yönü ve yoğunluğunu özetler.
-              </p>
-
-              {riskNote && (
-                <div className="mt-3 p-3 rounded-lg bg-white border border-zenith-border text-sm text-zenith-ink">
-                  <span className="font-bold">Not:</span> {riskNote}
-                </div>
-              )}
-            </div>
-
-            {/* Tone distribution */}
-            <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
-              <div className="text-xs font-semibold text-zenith-muted">
-                Ton Dağılımı
-              </div>
-
-              {percents && (
-                <div className="mt-4 space-y-3">
-                  <div>
-                    <div className="flex justify-between text-[11px] font-semibold">
-                      <span className="text-green-700">Pozitif</span>
-                      <span>{percents.pos}%</span>
-                    </div>
-                    <div className="h-2 rounded-full bg-black/10 overflow-hidden">
-                      <div
-                        className="h-2 bg-green-500"
-                        style={{ width: `${percents.pos}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between text-[11px] font-semibold">
-                      <span className="text-gray-700">Nötr</span>
-                      <span>{percents.neu}%</span>
-                    </div>
-                    <div className="h-2 rounded-full bg-black/10 overflow-hidden">
-                      <div
-                        className="h-2 bg-gray-500"
-                        style={{ width: `${percents.neu}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between text-[11px] font-semibold">
-                      <span className="text-red-700">Negatif</span>
-                      <span>{percents.neg}%</span>
-                    </div>
-                    <div className="h-2 rounded-full bg-black/10 overflow-hidden">
-                      <div
-                        className="h-2 bg-red-500"
-                        style={{ width: `${percents.neg}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Bias alerts */}
-            <div className="p-5 rounded-xl bg-white border border-zenith-border">
-              <div className="text-xs font-semibold text-zenith-muted">
-                Önyargı Uyarıları
-              </div>
-              <ul className="mt-3 space-y-2 text-sm">
-                {biasAlerts.length === 0 && (
-                  <li className="text-zenith-muted">
-                    Analiz uyarıları burada listelenecek.
-                  </li>
-                )}
-                {biasAlerts.map((b, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <span className="mt-1 inline-block w-2 h-2 rounded-full bg-zenith-accent" />
-                    <span className="text-zenith-ink">{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Action checklist */}
-            <div className="p-5 rounded-xl bg-white border border-zenith-border">
-              <div className="text-xs font-semibold text-zenith-muted">
-                Aksiyon Planı
-              </div>
-
-              <div className="mt-3 space-y-2 text-sm">
-                {[
-                  { key: "breathe", label: "10 saniye durakla ve yeniden oku" },
-                  { key: "shorten", label: "Metni %20 kısalt" },
-                  { key: "counter", label: "Karşı tez ekle" },
-                  { key: "risk", label: "Risk sınırını yaz" },
-                ].map((it) => (
-                  <label
-                    key={it.key}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={checks[it.key]}
-                      onChange={() => toggleCheck(it.key)}
-                      className="accent-black"
-                    />
-                    <span
-                      className={
-                        checks[it.key]
-                          ? "line-through text-zenith-muted"
-                          : "text-zenith-ink"
-                      }
-                    >
-                      {it.label}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-    </div>
-
-    {/* Quick Templates */}
-    <div className="zenith-card zenith-card-raise p-6 animate-card-in">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-extrabold text-zenith-ink">
-          ⚡ Hızlı Şablonlar
-        </h3>
-        <span className="zenith-chip">1 tık müdahale</span>
-      </div>
-
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-        {QUICK_TEMPLATES.map((t) => (
-          <button
-            key={t.key}
-            type="button"
-            onClick={() => applyTemplate(t.key)}
-            disabled={isLoading || rewriteLoading}
-            className="zenith-btn bg-black/[0.04] text-zenith-ink"
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-
-      <p className="mt-3 text-[11px] text-zenith-muted">
-        Şablonlar metni otomatik yapılandırır; “Saygılı ama net” rewrite motorunu çağırır.
-      </p>
-    </div>
-
-    {/* Binance CTA (tek yer, kaybolmaz) */}
-    {showBinanceBox && (
-      <div className="zenith-card zenith-card-raise p-6 animate-card-in">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-extrabold text-zenith-ink">💛 Destek</h3>
-          <span className="zenith-chip">affiliate</span>
-        </div>
-        <p className="mt-2 text-sm text-zenith-muted">
-          Eğer istersen Binance üzerinden kayıt olarak Zenith’in gelişimine katkı sağlayabilirsin.
-        </p>
-        {BINANCE_CTA}
-        <p className="text-center text-xs text-zenith-muted mt-2 opacity-75">
-          Ref Kodu: CPA_003RRA9B6U
-        </p>
-      </div>
-    )}
-
-    {/* Message Power (right deep card) */}
-    <div className="zenith-card p-6 animate-card-in">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-extrabold text-zenith-ink">
-          🧠 Mesaj Gücü • Derin Görünüm
-        </h3>
-        <span className="zenith-chip">signal UI</span>
-      </div>
-
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-4 rounded-xl bg-black/[0.03] border border-zenith-border">
-          <div className="text-xs font-semibold text-zenith-muted">Skor</div>
-          <div className="mt-1 text-4xl font-extrabold text-zenith-ink">
-            {power.score}
-          </div>
-          <div className="text-sm font-bold text-zenith-muted">
-            {power.label}
-          </div>
-          <p className="mt-2 text-sm text-zenith-muted">{power.hint}</p>
-        </div>
-
-        <ToneMiniChart percents={percents} />
-      </div>
-    </div>
-  </div>
-) : (
-  <div className="lg:col-span-7">
-    <div className="zenith-card zenith-card-raise p-8 animate-card-in">
-      <h3 className="text-xl font-extrabold text-zenith-ink">
-        Başlamak için karar metnini yaz 👈
-      </h3>
-      <p className="mt-2 text-sm text-zenith-muted">
-        Metni girince sağ tarafta Ton Radar, Önyargı Uyarıları ve Aksiyon Planı otomatik açılacak.
-      </p>
-    </div>
-  </div>
-)}
-ute -top-40 -left-40 w-[520px] h-[520px] zenith-orb zenith-orb-a pointer-events-none" />
       <div className="absolute -bottom-48 -right-48 w-[560px] h-[560px] zenith-orb zenith-orb-b pointer-events-none" />
 
       <div className="relative z-10 px-4 pt-8 pb-12">
         <div className="mx-auto max-w-7xl">
-          {/* Üstteki çip bandı (kurumsal toolbar hissi) */}
+          {/* Üstteki çip bandı */}
           <div className="zenith-card px-4 py-2 mb-4">
             <div className="flex flex-wrap items-center gap-2">
               <span className="zenith-chip">Ton Radar</span>
@@ -832,12 +559,11 @@ ute -top-40 -left-40 w-[520px] h-[520px] zenith-orb zenith-orb-a pointer-events-
           </div>
 
           {/* Top bar */}
-<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
-  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.06] text-xs font-semibold text-zenith-muted">
-    ⚡ Zero Ego • Ultra Premium
-  </div>
-</div>
-
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.06] text-xs font-semibold text-zenith-muted">
+              ⚡ Zero Ego • Ultra Premium
+            </div>
+          </div>
 
           {/* Main grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -976,7 +702,7 @@ ute -top-40 -left-40 w-[520px] h-[520px] zenith-orb zenith-orb-a pointer-events-
                 </p>
               </div>
 
-              {/* Message Power (left variant) */}
+              {/* Message Power (left) */}
               <div className="zenith-card p-6 animate-card-in">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-extrabold text-zenith-ink">
@@ -995,5 +721,306 @@ ute -top-40 -left-40 w-[520px] h-[520px] zenith-orb zenith-orb-a pointer-events-
                 <p className="mt-2 text-sm text-zenith-muted">{power.hint}</p>
               </div>
             </div>
+
+            {/* ================= RIGHT PANEL ================= */}
+            {showRightPanel ? (
+              <div className="lg:col-span-7 space-y-6">
+                {/* Stats row */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="zenith-stat animate-card-in">
+                    <div className="zenith-stat-label">Durum</div>
+                    <div className="zenith-stat-value">
+                      {analysisResult
+                        ? "Analiz Hazır"
+                        : isLoading
+                        ? "İşleniyor"
+                        : "Beklemede"}
+                    </div>
+                    <div className="zenith-stat-sub">Ton motoru</div>
+                  </div>
+
+                  <div className="zenith-stat animate-card-in">
+                    <div className="zenith-stat-label">Rewrite</div>
+                    <div className="zenith-stat-value">
+                      {rewriteText
+                        ? "1 Öneri"
+                        : rewriteLoading
+                        ? "Üretiliyor"
+                        : "Hazır"}
+                    </div>
+                    <div className="zenith-stat-sub">Tek tık güçlendirme</div>
+                  </div>
+
+                  <div className="zenith-stat animate-card-in">
+                    <div className="zenith-stat-label">Premium</div>
+                    <div className="zenith-stat-value">Aktif</div>
+                    <div className="zenith-stat-sub">Soft elit UI</div>
+                  </div>
+                </div>
+
+                {/* Main Analysis Mega Card */}
+                <div className="zenith-card p-7 animate-card-in">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <h2 className="text-2xl font-extrabold text-zenith-primary">
+                      🧠 Ton Radar & Ego Haritası
+                    </h2>
+                    {compoundMeta && (
+                      <span
+                        className={`text-xs font-extrabold px-3 py-1.5 rounded-full border ${compoundMeta.pill} ${compoundMeta.color}`}
+                      >
+                        {compoundMeta.text}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Loading shimmer grid */}
+                  {isLoading && !analysisResult && (
+                    <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="zenith-shimmer animate-shimmer h-28 rounded-xl" />
+                      <div className="zenith-shimmer animate-shimmer h-28 rounded-xl" />
+                      <div className="zenith-shimmer animate-shimmer h-28 rounded-xl" />
+                      <div className="zenith-shimmer animate-shimmer h-28 rounded-xl" />
+                    </div>
+                  )}
+
+                  {/* Results */}
+                  {analysisResult && (
+                    <>
+                      <PerceptionSurvey
+                        analysis={analysisResult}
+                        originalText={decisionText}
+                      />
+
+                      <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Compound score card */}
+                        <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
+                          <div className="text-xs font-semibold text-zenith-muted">
+                            Bileşik Skor
+                          </div>
+                          <div className="mt-2 text-4xl font-extrabold text-zenith-ink">
+                            {Number(analysisResult.bileşik_skor).toFixed(3)}
+                          </div>
+                          <p className="mt-2 text-sm text-zenith-muted">
+                            Skor metindeki duygu yönü ve yoğunluğunu özetler.
+                          </p>
+
+                          {riskNote && (
+                            <div className="mt-3 p-3 rounded-lg bg-white border border-zenith-border text-sm text-zenith-ink">
+                              <span className="font-bold">Not:</span> {riskNote}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Tone distribution */}
+                        <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
+                          <div className="text-xs font-semibold text-zenith-muted">
+                            Ton Dağılımı
+                          </div>
+
+                          {percents && (
+                            <div className="mt-4 space-y-3">
+                              <div>
+                                <div className="flex justify-between text-[11px] font-semibold">
+                                  <span className="text-green-700">Pozitif</span>
+                                  <span>{percents.pos}%</span>
+                                </div>
+                                <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                                  <div
+                                    className="h-2 bg-green-500"
+                                    style={{ width: `${percents.pos}%` }}
+                                  />
+                                </div>
+                              </div>
+
+                              <div>
+                                <div className="flex justify-between text-[11px] font-semibold">
+                                  <span className="text-gray-700">Nötr</span>
+                                  <span>{percents.neu}%</span>
+                                </div>
+                                <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                                  <div
+                                    className="h-2 bg-gray-500"
+                                    style={{ width: `${percents.neu}%` }}
+                                  />
+                                </div>
+                              </div>
+
+                              <div>
+                                <div className="flex justify-between text-[11px] font-semibold">
+                                  <span className="text-red-700">Negatif</span>
+                                  <span>{percents.neg}%</span>
+                                </div>
+                                <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                                  <div
+                                    className="h-2 bg-red-500"
+                                    style={{ width: `${percents.neg}%` }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Bias alerts */}
+                        <div className="p-5 rounded-xl bg-white border border-zenith-border">
+                          <div className="text-xs font-semibold text-zenith-muted">
+                            Önyargı Uyarıları
+                          </div>
+                          <ul className="mt-3 space-y-2 text-sm">
+                            {biasAlerts.length === 0 && (
+                              <li className="text-zenith-muted">
+                                Analiz uyarıları burada listelenecek.
+                              </li>
+                            )}
+                            {biasAlerts.map((b, i) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <span className="mt-1 inline-block w-2 h-2 rounded-full bg-zenith-accent" />
+                                <span className="text-zenith-ink">{b}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Action checklist */}
+                        <div className="p-5 rounded-xl bg-white border border-zenith-border">
+                          <div className="text-xs font-semibold text-zenith-muted">
+                            Aksiyon Planı
+                          </div>
+
+                          <div className="mt-3 space-y-2 text-sm">
+                            {[
+                              { key: "breathe", label: "10 saniye durakla ve yeniden oku" },
+                              { key: "shorten", label: "Metni %20 kısalt" },
+                              { key: "counter", label: "Karşı tez ekle" },
+                              { key: "risk", label: "Risk sınırını yaz" },
+                            ].map((it) => (
+                              <label
+                                key={it.key}
+                                className="flex items-center gap-2 cursor-pointer"
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={checks[it.key]}
+                                  onChange={() => toggleCheck(it.key)}
+                                  className="accent-black"
+                                />
+                                <span
+                                  className={
+                                    checks[it.key]
+                                      ? "line-through text-zenith-muted"
+                                      : "text-zenith-ink"
+                                  }
+                                >
+                                  {it.label}
+                                </span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* Quick Templates */}
+                <div className="zenith-card zenith-card-raise p-6 animate-card-in">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-extrabold text-zenith-ink">
+                      ⚡ Hızlı Şablonlar
+                    </h3>
+                    <span className="zenith-chip">1 tık müdahale</span>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                    {QUICK_TEMPLATES.map((t) => (
+                      <button
+                        key={t.key}
+                        type="button"
+                        onClick={() => applyTemplate(t.key)}
+                        disabled={isLoading || rewriteLoading}
+                        className="zenith-btn bg-black/[0.04] text-zenith-ink"
+                      >
+                        {t.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <p className="mt-3 text-[11px] text-zenith-muted">
+                    Şablonlar metni otomatik yapılandırır; “Saygılı ama net” rewrite motorunu çağırır.
+                  </p>
+                </div>
+
+                {/* Binance CTA (tek yer) */}
+                {showBinanceBox && (
+                  <div className="zenith-card zenith-card-raise p-6 animate-card-in">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-extrabold text-zenith-ink">
+                        💛 Destek
+                      </h3>
+                      <span className="zenith-chip">affiliate</span>
+                    </div>
+                    <p className="mt-2 text-sm text-zenith-muted">
+                      Eğer istersen Binance üzerinden kayıt olarak Zenith’in gelişimine katkı sağlayabilirsin.
+                    </p>
+                    {BINANCE_CTA}
+                    <p className="text-center text-xs text-zenith-muted mt-2 opacity-75">
+                      Ref Kodu: CPA_003RRA9B6U
+                    </p>
+                  </div>
+                )}
+
+                {/* Message Power (right) */}
+                <div className="zenith-card p-6 animate-card-in">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-extrabold text-zenith-ink">
+                      🧠 Mesaj Gücü • Derin Görünüm
+                    </h3>
+                    <span className="zenith-chip">signal UI</span>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-black/[0.03] border border-zenith-border">
+                      <div className="text-xs font-semibold text-zenith-muted">
+                        Skor
+                      </div>
+                      <div className="mt-1 text-4xl font-extrabold text-zenith-ink">
+                        {power.score}
+                      </div>
+                      <div className="text-sm font-bold text-zenith-muted">
+                        {power.label}
+                      </div>
+                      <p className="mt-2 text-sm text-zenith-muted">
+                        {power.hint}
+                      </p>
+                    </div>
+
+                    <ToneMiniChart percents={percents} />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="lg:col-span-7">
+                <div className="zenith-card zenith-card-raise p-8 animate-card-in">
+                  <h3 className="text-xl font-extrabold text-zenith-ink">
+                    Başlamak için karar metnini yaz 👈
+                  </h3>
+                  <p className="mt-2 text-sm text-zenith-muted">
+                    Metni girince sağ tarafta Ton Radar, Önyargı Uyarıları ve Aksiyon Planı otomatik açılacak.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Footer */}
+          <div className="text-center text-[10px] text-zenith-muted mt-10">
+            Beta • Zero Ego AI • Ultra Premium UI Layer
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
         
