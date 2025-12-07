@@ -14,15 +14,23 @@ import React, { useMemo, useState } from "react";
 
 const BINANCE_REF =
   "https://www.binance.com/activity/referral-entry/CPA?ref=CPA_003RRA9B6U";
-<a
-  href={BINANCE_REF}
-  target="_blank"
-  rel="noreferrer"
-  className="mt-4 inline-flex items-center justify-center w-full zenith-btn-gold"
->
-  Binance’e Katıl & Zenith’i Destekle
-</a>
 
+/**
+ * Orijinalde burada component dışında direkt <a> vardı.
+ * Next/React build kırdığı için aşağıya "doğru kullanım" olarak
+ * const BINANCE_CTA oluşturuldu ve render yeri sağ panelde.
+ */
+
+const BINANCE_CTA = (
+  <a
+    href={BINANCE_REF}
+    target="_blank"
+    rel="noreferrer"
+    className="mt-4 inline-flex items-center justify-center w-full zenith-btn-gold"
+  >
+    Binance’e Katıl & Zenith’i Destekle
+  </a>
+);
 
 const SURPRISE_TIPS = [
   {
@@ -158,7 +166,6 @@ function ToneMiniChart({ percents }) {
   );
 }
 
-
 function riskNoteText(analysis) {
   if (!analysis) return null;
   const s = analysis.bileşik_skor ?? 0;
@@ -288,9 +295,7 @@ function PerceptionSurvey({ analysis, originalText }) {
       </div>
 
       {err && (
-        <div className="mt-3 zenith-alert zenith-alert-danger">
-          {err}
-        </div>
+        <div className="mt-3 zenith-alert zenith-alert-danger">{err}</div>
       )}
 
       {ok && (
@@ -314,7 +319,6 @@ function PerceptionSurvey({ analysis, originalText }) {
     </div>
   );
 }
-
 
 // Basit “mesaj gücü” heuristiği (UI için)
 function messagePowerScore(text) {
@@ -642,38 +646,38 @@ export default function HomePage() {
                 )}
 
                 {/* Rewrite Result */}
-{rewriteText && (
-  <section className="mt-5 zenith-card p-4 animate-card-in">
-    <div className="flex items-center justify-between gap-2">
-      <h3 className="font-bold text-zenith-ink">✨ Önerilen Metin</h3>
-      <div className="flex gap-2">
-        <button
-          type="button"
-          onClick={copyRewrite}
-          className="px-3 py-1.5 rounded-lg bg-black text-white text-xs font-bold"
-        >
-          Kopyala
-        </button>
-        <button
-          type="button"
-          onClick={() => setDecisionText(rewriteText)}
-          className="px-3 py-1.5 rounded-lg bg-black/[0.05] text-xs font-bold"
-        >
-          Uygula
-        </button>
-      </div>
-    </div>
+                {rewriteText && (
+                  <section className="mt-5 zenith-card p-4 animate-card-in">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-bold text-zenith-ink">
+                        ✨ Önerilen Metin
+                      </h3>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={copyRewrite}
+                          className="px-3 py-1.5 rounded-lg bg-black text-white text-xs font-bold"
+                        >
+                          Kopyala
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDecisionText(rewriteText)}
+                          className="px-3 py-1.5 rounded-lg bg-black/[0.05] text-xs font-bold"
+                        >
+                          Uygula
+                        </button>
+                      </div>
+                    </div>
 
-    <textarea
-      className="w-full mt-3 p-3 border border-zenith-border rounded-lg bg-black/[0.02]"
-      rows={5}
-      readOnly
-      value={rewriteText}
-    />
-  </section>
-)}
-
-                
+                    <textarea
+                      className="w-full mt-3 p-3 border border-zenith-border rounded-lg bg-black/[0.02]"
+                      rows={5}
+                      readOnly
+                      value={rewriteText}
+                    />
+                  </section>
+                )}
               </div>
 
               {/* Surprise Insight */}
@@ -719,14 +723,22 @@ export default function HomePage() {
                 <div className="zenith-stat animate-card-in">
                   <div className="zenith-stat-label">Durum</div>
                   <div className="zenith-stat-value">
-                    {analysisResult ? "Analiz Hazır" : isLoading ? "İşleniyor" : "Beklemede"}
+                    {analysisResult
+                      ? "Analiz Hazır"
+                      : isLoading
+                      ? "İşleniyor"
+                      : "Beklemede"}
                   </div>
                   <div className="zenith-stat-sub">Ton motoru</div>
                 </div>
                 <div className="zenith-stat animate-card-in">
                   <div className="zenith-stat-label">Rewrite</div>
                   <div className="zenith-stat-value">
-                    {rewriteText ? "1 Öneri" : rewriteLoading ? "Üretiliyor" : "Hazır"}
+                    {rewriteText
+                      ? "1 Öneri"
+                      : rewriteLoading
+                      ? "Üretiliyor"
+                      : "Hazır"}
                   </div>
                   <div className="zenith-stat-sub">Tek tık güçlendirme</div>
                 </div>
@@ -763,163 +775,219 @@ export default function HomePage() {
                 )}
 
                 {/* Results grid */}
-{analysisResult && (
-  <>
-    <PerceptionSurvey
-      analysis={analysisResult}
-      originalText={decisionText}
-    />
+                {analysisResult && (
+                  <>
+                    <PerceptionSurvey
+                      analysis={analysisResult}
+                      originalText={decisionText}
+                    />
 
-    <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* Compound score card */}
-      <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
-        <div className="text-xs font-semibold text-zenith-muted">
-          Bileşik Skor
-        </div>
-        <div className="mt-2 text-4xl font-extrabold text-zenith-ink">
-          {Number(analysisResult.bileşik_skor).toFixed(3)}
-        </div>
-        <p className="mt-2 text-sm text-zenith-muted">
-          Skor metindeki duygu yönü ve yoğunluğunu özetler.
-        </p>
+                    <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Compound score card */}
+                      <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
+                        <div className="text-xs font-semibold text-zenith-muted">
+                          Bileşik Skor
+                        </div>
+                        <div className="mt-2 text-4xl font-extrabold text-zenith-ink">
+                          {Number(analysisResult.bileşik_skor).toFixed(3)}
+                        </div>
+                        <p className="mt-2 text-sm text-zenith-muted">
+                          Skor metindeki duygu yönü ve yoğunluğunu özetler.
+                        </p>
 
-        {riskNote && (
-          <div className="mt-3 p-3 rounded-lg bg-white border border-zenith-border text-sm text-zenith-ink">
-            <span className="font-bold">Not:</span> {riskNote}
-          </div>
-        )}
-      </div>
+                        {riskNote && (
+                          <div className="mt-3 p-3 rounded-lg bg-white border border-zenith-border text-sm text-zenith-ink">
+                            <span className="font-bold">Not:</span> {riskNote}
+                          </div>
+                        )}
+                      </div>
 
-      {/* Tone distribution */}
-      <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
-        <div className="text-xs font-semibold text-zenith-muted">
-          Ton Dağılımı
-        </div>
+                      {/* Tone distribution */}
+                      <div className="p-5 rounded-xl bg-black/[0.03] border border-zenith-border">
+                        <div className="text-xs font-semibold text-zenith-muted">
+                          Ton Dağılımı
+                        </div>
 
-        {percents && (
-          <div className="mt-4 space-y-3">
-            <div>
-              <div className="flex justify-between text-[11px] font-semibold">
-                <span className="text-green-700">Pozitif</span>
-                <span>{percents.pos}%</span>
-              </div>
-              <div className="h-2 rounded-full bg-black/10 overflow-hidden">
-                <div
-                  className="h-2 bg-green-500"
-                  style={{ width: `${percents.pos}%` }}
-                />
-              </div>
-            </div>
+                        {percents && (
+                          <div className="mt-4 space-y-3">
+                            <div>
+                              <div className="flex justify-between text-[11px] font-semibold">
+                                <span className="text-green-700">Pozitif</span>
+                                <span>{percents.pos}%</span>
+                              </div>
+                              <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                                <div
+                                  className="h-2 bg-green-500"
+                                  style={{ width: `${percents.pos}%` }}
+                                />
+                              </div>
+                            </div>
 
-            <div>
-              <div className="flex justify-between text-[11px] font-semibold">
-                <span className="text-gray-700">Nötr</span>
-                <span>{percents.neu}%</span>
-              </div>
-              <div className="h-2 rounded-full bg-black/10 overflow-hidden">
-                <div
-                  className="h-2 bg-gray-500"
-                  style={{ width: `${percents.neu}%` }}
-                />
-              </div>
-            </div>
+                            <div>
+                              <div className="flex justify-between text-[11px] font-semibold">
+                                <span className="text-gray-700">Nötr</span>
+                                <span>{percents.neu}%</span>
+                              </div>
+                              <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                                <div
+                                  className="h-2 bg-gray-500"
+                                  style={{ width: `${percents.neu}%` }}
+                                />
+                              </div>
+                            </div>
 
-            <div>
-              <div className="flex justify-between text-[11px] font-semibold">
-                <span className="text-red-700">Negatif</span>
-                <span>{percents.neg}%</span>
-              </div>
-              <div className="h-2 rounded-full bg-black/10 overflow-hidden">
-                <div
-                  className="h-2 bg-red-500"
-                  style={{ width: `${percents.neg}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+                            <div>
+                              <div className="flex justify-between text-[11px] font-semibold">
+                                <span className="text-red-700">Negatif</span>
+                                <span>{percents.neg}%</span>
+                              </div>
+                              <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                                <div
+                                  className="h-2 bg-red-500"
+                                  style={{ width: `${percents.neg}%` }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
 
-      {/* Bias alerts */}
-      <div className="p-5 rounded-xl bg-white border border-zenith-border">
-        <div className="text-xs font-semibold text-zenith-muted">
-          Önyargı Uyarıları
-        </div>
-        <ul className="mt-3 space-y-2 text-sm">
-          {biasAlerts.length === 0 && (
-            <li className="text-zenith-muted">
-              Analiz uyarıları burada listelenecek.
-            </li>
-          )}
-          {biasAlerts.map((b, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <span className="mt-1 inline-block w-2 h-2 rounded-full bg-zenith-accent" />
-              <span className="text-zenith-ink">{b}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+                      {/* Bias alerts */}
+                      <div className="p-5 rounded-xl bg-white border border-zenith-border">
+                        <div className="text-xs font-semibold text-zenith-muted">
+                          Önyargı Uyarıları
+                        </div>
+                        <ul className="mt-3 space-y-2 text-sm">
+                          {biasAlerts.length === 0 && (
+                            <li className="text-zenith-muted">
+                              Analiz uyarıları burada listelenecek.
+                            </li>
+                          )}
+                          {biasAlerts.map((b, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <span className="mt-1 inline-block w-2 h-2 rounded-full bg-zenith-accent" />
+                              <span className="text-zenith-ink">{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-      {/* Action checklist */}
-      <div className="p-5 rounded-xl bg-white border border-zenith-border">
-        <div className="text-xs font-semibold text-zenith-muted">
-          Aksiyon Planı
-        </div>
+                      {/* Action checklist */}
+                      <div className="p-5 rounded-xl bg-white border border-zenith-border">
+                        <div className="text-xs font-semibold text-zenith-muted">
+                          Aksiyon Planı
+                        </div>
 
-        <div className="mt-3 space-y-2 text-sm">
-          {[
-            { key: "breathe", label: "10 saniye durakla ve yeniden oku" },
-            { key: "shorten", label: "Metni %20 kısalt" },
-            { key: "counter", label: "Karşı tez ekle" },
-            { key: "risk", label: "Risk sınırını yaz" },
-          ].map((it) => (
-            <label
-              key={it.key}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                checked={checks[it.key]}
-                onChange={() => toggleCheck(it.key)}
-                className="accent-black"
-              />
-              <span
-                className={
-                  checks[it.key]
-                    ? "line-through text-zenith-muted"
-                    : "text-zenith-ink"
-                }
-              >
-                {it.label}
-              </span>
-            </label>
-          ))}
-        </div>
-      </div>
-    </div>
-  </>
-)}
-)} 
-
+                        <div className="mt-3 space-y-2 text-sm">
+                          {[
+                            { key: "breathe", label: "10 saniye durakla ve yeniden oku" },
+                            { key: "shorten", label: "Metni %20 kısalt" },
+                            { key: "counter", label: "Karşı tez ekle" },
+                            { key: "risk", label: "Risk sınırını yaz" },
+                          ].map((it) => (
+                            <label
+                              key={it.key}
+                              className="flex items-center gap-2 cursor-pointer"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={checks[it.key]}
+                                onChange={() => toggleCheck(it.key)}
+                                className="accent-black"
+                              />
+                              <span
+                                className={
+                                  checks[it.key]
+                                    ? "line-through text-zenith-muted"
+                                    : "text-zenith-ink"
+                                }
+                              >
+                                {it.label}
+                              </span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div> {/* Ton Radar & Ego Haritası mega kartı kapanışı */}
 
               {/* Quick Templates */}
               <div className="zenith-card zenith-card-raise p-6 animate-card-in">
                 {/* ... senin quick templates içeriği ... */}
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-extrabold text-zenith-ink">
+                    ⚡ Hızlı Şablonlar
+                  </h3>
+                  <span className="zenith-chip">1 tık müdahale</span>
+                </div>
+
+                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                  {QUICK_TEMPLATES.map((t) => (
+                    <button
+                      key={t.key}
+                      type="button"
+                      onClick={() => applyTemplate(t.key)}
+                      disabled={isLoading || rewriteLoading}
+                      className="zenith-btn bg-black/[0.04] text-zenith-ink"
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+
+                <p className="mt-3 text-[11px] text-zenith-muted">
+                  Şablonlar metni otomatik yapılandırır; “Saygılı ama net” rewrite motorunu çağırır.
+                </p>
               </div>
 
               {/* Binance CTA (premium + şeffaf) */}
               {analysisResult && (
                 <div className="zenith-card zenith-card-raise p-6 animate-card-in">
                   {/* ... binance içeriği ... */}
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-extrabold text-zenith-ink">
+                      💛 Destek
+                    </h3>
+                    <span className="zenith-chip">affiliate</span>
+                  </div>
+                  <p className="mt-2 text-sm text-zenith-muted">
+                    Eğer istersen Binance üzerinden kayıt olarak Zenith’in gelişimine katkı sağlayabilirsin.
+                  </p>
+                  {BINANCE_CTA}
                 </div>
               )}
 
               {/* Message Power (right deep card) */}
               <div className="zenith-card p-6 animate-card-in">
                 {/* ... power içeriği ... */}
-              </div>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-extrabold text-zenith-ink">
+                    🧠 Mesaj Gücü • Derin Görünüm
+                  </h3>
+                  <span className="zenith-chip">signal UI</span>
+                </div>
 
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-black/[0.03] border border-zenith-border">
+                    <div className="text-xs font-semibold text-zenith-muted">
+                      Skor
+                    </div>
+                    <div className="mt-1 text-4xl font-extrabold text-zenith-ink">
+                      {power.score}
+                    </div>
+                    <div className="text-sm font-bold text-zenith-muted">
+                      {power.label}
+                    </div>
+                    <p className="mt-2 text-sm text-zenith-muted">
+                      {power.hint}
+                    </p>
+                  </div>
+
+                  <ToneMiniChart percents={percents} />
+                </div>
+              </div>
             </div> {/* RIGHT PANEL kapanışı */}
           </div> {/* MAIN GRID kapanışı */}
 
@@ -927,10 +995,8 @@ export default function HomePage() {
           <div className="text-center text-[10px] text-zenith-muted mt-10">
             Beta • Zero Ego AI • Ultra Premium UI Layer
           </div>
-
         </div>
       </div>
     </div>
   );
 }
-
