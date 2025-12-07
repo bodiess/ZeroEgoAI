@@ -763,7 +763,6 @@ export default function HomePage() {
 
                 {/* Results grid */}
                 {analysisResult && (
-                  {analysisResult && (
   <PerceptionSurvey analysis={analysisResult} originalText={decisionText} />
 )}
 
