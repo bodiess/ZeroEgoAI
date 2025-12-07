@@ -264,3 +264,37 @@
   border: 1px solid rgba(255,255,255,0.10) !important;
   box-shadow: none !important;
 }
+/* =========================================================
+   Corporate Readability Patch
+   - Daha büyük metin
+   - Butonlar daha kurumsal
+   ========================================================= */
+
+.zenith-card p,
+.zenith-card li,
+.text-zenith-muted {
+  font-size: 14.5px;
+}
+
+.zenith-textarea{
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+/* Butonlar daha kurumsal: bağıran uppercase’i bırak */
+.zenith-btn{
+  font-size: 14.5px;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-weight: 700;
+}
+
+/* Ana CTA daha net ayrılsın */
+.zenith-btn-primary{
+  font-size: 15px;
+}
+
+/* Chipler biraz büyüsün */
+.zenith-chip{
+  font-size: 11px;
+}

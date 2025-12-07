@@ -548,14 +548,15 @@ export default function HomePage() {
       <div className="relative z-10 px-4 pt-8 pb-12">
         <div className="mx-auto max-w-7xl">
           {/* Üstteki çip bandı */}
-          <div className="zenith-card px-4 py-2 mb-4">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="zenith-chip">Ton Radar</span>
-              <span className="zenith-chip">Önyargı Uyarıları</span>
-              <span className="zenith-chip">Sürpriz İçgörü</span>
-              <span className="zenith-chip">Aksiyon Planı</span>
-              <span className="zenith-chip">Rewrite</span>
-            </div>
+          <div className="zenith-card px-5 py-3 mb-5">
+  <div className="text-sm font-extrabold text-zenith-ink">
+    Karar metnini analiz et • Tonu dengele • Önyargı riskini gör • Profesyonel rewrite al
+  </div>
+  <div className="text-xs text-zenith-muted mt-1">
+    30 saniyede daha net, daha güvenli ve daha kurumsal bir mesaj.
+  </div>
+</div>
+
           </div>
 
           {/* Top bar */}
@@ -571,14 +572,35 @@ export default function HomePage() {
             <div className="lg:col-span-5 space-y-6">
               {/* Input / Core card */}
               <div className="zenith-card zenith-card-raise p-7 animate-card-in">
-                <header>
-                  <h1 className="text-3xl font-extrabold text-zenith-primary tracking-tight">
-                    Zenith Decision
-                  </h1>
-                  <p className="text-zenith-muted mt-1 italic text-sm">
-                    Duygu filtresi değil, ego sıfırlayan karar aynası.
-                  </p>
-                </header>
+                <header className="space-y-3">
+  <div className="inline-flex items-center gap-2">
+    <span className="zenith-chip">Decision Quality</span>
+    <span className="zenith-chip">Tone & Bias</span>
+  </div>
+
+  <h1 className="text-4xl font-extrabold text-zenith-ink tracking-tight">
+    Zenith Decision
+  </h1>
+
+  <p className="text-base text-zenith-muted">
+    Karar metnindeki <b>duygu, risk ve önyargı sinyallerini</b> yakalar.
+    Mesajını <b>daha net, daha profesyonel ve daha güvenli</b> hale getirmen için
+    yönlendirme ve rewrite önerileri sunar.
+  </p>
+
+  {/* Neye yarar? mini kurumsal özet */}
+  <div className="p-4 rounded-xl bg-black/[0.04] border border-zenith-border">
+    <div className="text-sm font-extrabold text-zenith-ink">
+      3 Adımda Kullanım
+    </div>
+    <ul className="mt-2 space-y-1 text-sm text-zenith-muted">
+      <li>1) Karar metnini yaz.</li>
+      <li>2) Analiz ile ton/önyargı/risk haritasını gör.</li>
+      <li>3) Rewrite ile mesajını profesyonelleştirip gönder.</li>
+    </ul>
+  </div>
+</header>
+
 
                 <form onSubmit={handleSubmit} className="mt-6 space-y-4">
                   <label className="block text-sm font-medium text-zenith-ink">
@@ -595,16 +617,53 @@ export default function HomePage() {
                     required
                   />
 
-                  {/* Rewrite buttons */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleRewrite("soften")}
-                      disabled={rewriteLoading || isLoading}
-                      className="zenith-btn-gold"
-                    >
-                      {rewriteLoading ? "..." : "Yumuşat"}
-                    </button>
+                  {/* ANA CTA */}
+<button
+  type="submit"
+  disabled={isLoading}
+  className={`w-full zenith-btn-primary text-base ${
+    isLoading ? "opacity-60 cursor-not-allowed" : ""
+  }`}
+>
+  {isLoading ? "Analiz Ediliyor..." : "Kararı Analiz Et"}
+</button>
+
+{/* Rewrite area - ikincil aksiyonlar */}
+<div className="mt-3">
+  <div className="text-sm font-semibold text-zenith-muted mb-2">
+    Mesajını profesyonelleştir (opsiyonel)
+  </div>
+
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+    <button
+      type="button"
+      onClick={() => handleRewrite("soften")}
+      disabled={rewriteLoading || isLoading}
+      className="zenith-btn"
+    >
+      {rewriteLoading ? "..." : "Yumuşat"}
+    </button>
+
+    <button
+      type="button"
+      onClick={() => handleRewrite("clarify")}
+      disabled={rewriteLoading || isLoading}
+      className="zenith-btn"
+    >
+      {rewriteLoading ? "..." : "Netleştir"}
+    </button>
+
+    <button
+      type="button"
+      onClick={() => handleRewrite("assertive")}
+      disabled={rewriteLoading || isLoading}
+      className="zenith-btn"
+    >
+      {rewriteLoading ? "..." : "Güçlü & Saygılı"}
+    </button>
+  </div>
+</div>
+
 
                     <button
                       type="button"
