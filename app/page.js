@@ -899,4 +899,38 @@ export default function HomePage() {
     </div>
   </>
 )}
+)} 
+
+              </div> {/* Ton Radar & Ego Haritası mega kartı kapanışı */}
+
+              {/* Quick Templates */}
+              <div className="zenith-card zenith-card-raise p-6 animate-card-in">
+                {/* ... senin quick templates içeriği ... */}
+              </div>
+
+              {/* Binance CTA (premium + şeffaf) */}
+              {analysisResult && (
+                <div className="zenith-card zenith-card-raise p-6 animate-card-in">
+                  {/* ... binance içeriği ... */}
+                </div>
+              )}
+
+              {/* Message Power (right deep card) */}
+              <div className="zenith-card p-6 animate-card-in">
+                {/* ... power içeriği ... */}
+              </div>
+
+            </div> {/* RIGHT PANEL kapanışı */}
+          </div> {/* MAIN GRID kapanışı */}
+
+          {/* Footer */}
+          <div className="text-center text-[10px] text-zenith-muted mt-10">
+            Beta • Zero Ego AI • Ultra Premium UI Layer
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
 
